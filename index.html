@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Premier League - Cricket Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Poppins:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --secondary: #ffa500;
+            --accent: #ff1744;
+            --success: #00e676;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050710;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(0, 217, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 23, 68, 0.08) 0%, transparent 50%);
+        }
+
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== CRICKET ANIMATIONS ===== */
+        @keyframes ballBounce {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-30px) rotate(90deg);
+            }
+
+            50% {
+                transform: translateY(0) rotate(180deg);
+            }
+
+            75% {
+                transform: translateY(-20px) rotate(270deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        @keyframes batSwing {
+            0% {
+                transform: rotate(0deg);
+                transform-origin: right bottom;
+            }
+
+            50% {
+                transform: rotate(-120deg);
+                transform-origin: right bottom;
+            }
+
+            100% {
+                transform: rotate(0deg);
+                transform-origin: right bottom;
+            }
+        }
+
+        @keyframes wicketFall {
+            0% {
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: rotate(45deg) translateX(20px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(90deg) translateX(40px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sixFire {
+            0% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5) translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes boundaryGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), inset 0 0 20px rgba(0, 230, 118, 0.4);
+            }
+        }
+
+        @keyframes outAnimation {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2) rotate(15deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes crowdCheer {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .ball-bounce {
+            animation: ballBounce 0.8s ease-in-out;
+        }
+
+        .bat-swing {
+            animation: batSwing 0.6s ease-in-out;
+        }
+
+        .wicket-fall {
+            animation: wicketFall 0.8s ease-in-out;
+        }
+
+        .six-fire {
+            animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .boundary-glow {
+            animation: boundaryGlow 1s ease-in-out infinite;
+        }
+
+        .out-flash {
+            animation: outAnimation 0.8s ease-in-out;
+        }
+
+        .crowd-cheer {
+            animation: crowdCheer 0.5s ease-in-out;
+        }
+
+        .slide-down {
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .shake-effect {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* ===== UI ELEMENTS ===== */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: linear-gradient(to bottom, rgba(10, 14, 39, 0.95), transparent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .game-arena {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8), rgba(15, 23, 42, 0.8));
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-arena::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 217, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .scorecard {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.6));
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .player-card {
+            text-align: center;
+        }
+
+        .player-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .player-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-score {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .vs-section {
+            text-align: center;
+        }
+
+        .vs-badge {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .wicket-display {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .wicket-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .wicket-icon.fallen {
+            background: #666;
+            opacity: 0.5;
+        }
+
+        .question-area {
+            background: linear-gradient(135deg, rgba(5, 7, 16, 0.8), rgba(15, 23, 42, 0.8));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border: 1px solid currentColor;
+        }
+
+        .difficulty-easy {
+            color: var(--success);
+            background: rgba(0, 230, 118, 0.1);
+            border-color: var(--success);
+        }
+
+        .difficulty-medium {
+            color: var(--secondary);
+            background: rgba(255, 165, 0, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .difficulty-hard {
+            color: var(--accent);
+            background: rgba(255, 23, 68, 0.1);
+            border-color: var(--accent);
+        }
+
+        .question-text {
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 3px;
+            color: var(--primary);
+            text-align: center;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            margin: 2rem 0;
+            letter-spacing: 2px;
+        }
+
+        .timer-critical {
+            color: var(--accent);
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+
+        .timer-normal {
+            color: var(--primary);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(5, 7, 16, 0.9);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--primary);
+            text-align: center;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            outline: none;
+            margin: 2rem 0;
+        }
+
+        .answer-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #00a8cc);
+            color: var(--dark-bg);
+            grid-column: 1 / -1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 217, 255, 0.2);
+        }
+
+        .shots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .shot-card {
+            padding: 1.75rem;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shot-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .shot-card.easy {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 200, 100, 0.1));
+            border-color: var(--success);
+        }
+
+        .shot-card.medium {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(255, 140, 0, 0.1));
+            border-color: var(--secondary);
+        }
+
+        .shot-card.hard {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.15), rgba(255, 0, 0, 0.1));
+            border-color: var(--accent);
+        }
+
+        .shot-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .shot-reward {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-top: 1rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .stat-item-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-item-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* ===== CRICKET GROUND MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(34, 197, 94, 0.3) 0%,
+                    rgba(139, 92, 46, 0.2) 50%,
+                    rgba(51, 65, 85, 0.3) 100%);
+            background-image:
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grass" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0,50 Q25,40 50,50 T100,50" stroke="%23166534" fill="none" stroke-width="2"/><path d="M10,55 Q35,45 60,55 T110,55" stroke="%234ade80" fill="none" stroke-width="1.5"/></pattern></defs><rect width="1200" height="600" fill="%231a472a"/><rect width="1200" height="600" fill="url(%23grass)" opacity="0.3"/></svg>');
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+
+            position: relative;
+            z-index: 10;
+
+            background: linear-gradient(135deg,
+                    rgba(10, 14, 39, 0.98),
+                    rgba(15, 23, 42, 0.98));
+
+            border-radius: 24px;
+
+            padding: 2rem;
+
+            border: 2px solid var(--primary);
+
+            width: 100%;
+            max-width: 600px;
+
+            max-height: 95vh;
+
+            overflow-y: auto;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.9),
+                0 0 60px rgba(0, 217, 255, 0.3);
+        }
+
+        .cricket-background {
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(0, 230, 118, 0.1), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cricket-background.right {
+            top: auto;
+            bottom: -200px;
+            right: auto;
+            left: -200px;
+        }
+
+        .modal-emoji {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: crowdCheer 0.8s ease-in-out;
+        }
+
+        .modal-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .modal-subtitle {
+            font-size: 1.25rem;
+            margin: 1rem 0 2rem;
+            color: #bbb;
+            font-weight: 600;
+        }
+
+        .scorecard-modal {
+            background: rgba(0, 217, 255, 0.05);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scorecard-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scorecard-item {
+            text-align: center;
+        }
+
+        .scorecard-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .scorecard-value {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .achievement-badge {
+            padding: 1rem 2rem;
+            background: rgba(0, 230, 118, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .achievement-text {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        .modal-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .cricket-field {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(139, 92, 46, 0.1));
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--primary);
+            overflow: hidden;
+        }
+
+        .cricket-graphic {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .bat {
+            left: 20px;
+            top: 20px;
+        }
+
+        .ball {
+            right: 30px;
+            top: 40px;
+            animation: ballBounce 2s infinite;
+        }
+
+        .stumps {
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 2rem;
+        }
+
+        .crowd-left {
+            left: 10%;
+            bottom: 10px;
+        }
+
+        .crowd-right {
+            right: 10%;
+            bottom: 10px;
+            animation: crowdCheer 1s infinite;
+        }
+
+        /* Animation for animations text */
+        .animation-text {
+            position: fixed;
+            font-weight: 900;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 999;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .four-text {
+            color: var(--secondary);
+            animation: slideDown 1s ease-out;
+        }
+
+        .six-text {
+            color: var(--success);
+            animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .out-text {
+            color: var(--accent);
+            animation: outAnimation 0.8s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+
+            .shots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .question-text {
+                font-size: 2rem;
+            }
+
+            .scorecard {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+
+                padding: 1.25rem;
+
+                border-radius: 18px;
+
+                max-height: 92vh;
+            }
+
+            .modal-title {
+
+                font-size: 1.8rem;
+            }
+
+            .modal-subtitle {
+
+                font-size: 0.9rem;
+            }
+
+            .modal-emoji {
+
+                font-size: 3rem;
+
+                margin-bottom: 0.75rem;
+            }
+
+            .cricket-field {
+
+                height: 100px;
+            }
+
+            .cricket-graphic {
+
+                font-size: 1.5rem;
+            }
+
+            .scorecard-row {
+
+                grid-template-columns: 1fr;
+            }
+
+            .scorecard-value {
+
+                font-size: 1.3rem;
+            }
+
+            .achievement-badge {
+
+                padding: 0.75rem;
+            }
+
+            .achievement-text {
+
+                font-size: 0.9rem;
+            }
+
+            .modal-buttons {
+
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">🏏</div>
+                <span>Math Premier League</span>
+            </div>
+            <div style="display: flex; gap: 2rem; align-items: center;">
+                <div style="text-align: right;">
+                    <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px;">Rating
+                    </div>
+                    <div id="sessionRating" style="font-size: 1.5rem; font-weight: 900; color: var(--primary);">1500
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Container -->
+    <div class="game-container">
+        <!-- Game Arena -->
+        <div class="game-arena slide-down">
+            <!-- Scorecard -->
+            <div class="scorecard">
+                <div class="player-card">
+                    <div class="player-avatar">🏏</div>
+                    <div class="player-name">You</div>
+                    <div class="player-score" id="playerScore">0</div>
+                    <div style="font-size: 0.85rem; color: #999;">RUNS</div>
+                </div>
+
+                <div class="vs-section">
+                    <div class="vs-badge">VS</div>
+                    <div
+                        style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 1rem;">
+                        Target: <span id="target">48</span></div>
+                </div>
+
+                <div class="player-card">
+                    <div class="player-avatar" style="border-color: var(--secondary);">🎯</div>
+                    <div class="player-name">Target</div>
+                    <div class="player-score" style="color: var(--secondary);" id="targetScore">48</div>
+                    <div style="font-size: 0.85rem; color: #999;">GOAL</div>
+                </div>
+            </div>
+
+            <!-- Wickets Display -->
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div
+                    style="font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 600;">
+                    Wickets Remaining</div>
+                <div class="wicket-display" id="wicketDisplay">
+                    <div class="wicket-icon">🏃</div>
+                    <div class="wicket-icon">🏃</div>
+                </div>
+            </div>
+
+            <!-- Default Screen -->
+            <div id="defaultScreen">
+                <div style="text-align: center; padding: 3rem 0;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: ballBounce 2s infinite;">🏏</div>
+                    <h2 class="gradient-text" style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">Select
+                        Your Shot</h2>
+                    <p style="color: #999; font-size: 1.1rem; margin-bottom: 2.5rem;">Choose difficulty and solve the
+                        math challenge</p>
+                </div>
+
+                <!-- Shot Selection Grid -->
+                <div class="shots-grid">
+                    <button class="shot-card easy" onclick="selectShot('Defensive', '+1 Run', 'Easy', 1)">
+                        <div class="shot-name">🛡️ Defensive</div>
+                        <div style="font-size: 0.85rem; color: #999;">Easy</div>
+                        <div class="shot-reward" style="color: var(--success);">+1</div>
+                    </button>
+
+                    <button class="shot-card medium" onclick="selectShot('Drive', '+4 Runs', 'Medium', 4)">
+                        <div class="shot-name">🎯 Drive</div>
+                        <div style="font-size: 0.85rem; color: #999;">Medium</div>
+                        <div class="shot-reward" style="color: var(--secondary);">+4</div>
+                    </button>
+
+                    <button class="shot-card hard" onclick="selectShot('Pull / Hook', '+4 Runs', 'Hard', 4)">
+                        <div class="shot-name">⚡ Pull/Hook</div>
+                        <div style="font-size: 0.85rem; color: #999;">Hard</div>
+                        <div class="shot-reward" style="color: var(--accent);">+4</div>
+                    </button>
+
+                    <button class="shot-card hard" onclick="selectShot('Lofted Shot', '+6 Runs', 'Expert', 6)">
+                        <div class="shot-name">🚀 Lofted Shot</div>
+                        <div style="font-size: 0.85rem; color: #999;">Expert</div>
+                        <div class="shot-reward" style="color: var(--accent);">+6</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question Screen -->
+            <div id="questionScreen" style="display: none;">
+                <div style="margin-bottom: 2rem;">
+                    <div class="difficulty-badge" id="difficultyBadge"></div>
+                    <h3 id="shotNameDisplay" style="font-size: 2.25rem; font-weight: 800; color: var(--primary);"></h3>
+                </div>
+
+                <div class="question-area">
+                    <div
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin-bottom: 1rem; font-weight: 600;">
+                        Solve This:</div>
+                    <div class="question-text bat-swing" id="questionText"></div>
+                    <div class="timer-display" id="timerDisplay">00:10</div>
+                </div>
+
+                <input id="answerInput" type="text" class="answer-input" placeholder="Enter your answer..."
+                    autocomplete="off" />
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="submitAnswer()">
+                        ✅ Submit
+                    </button>
+                    <button class="btn btn-secondary" onclick="skipQuestion()">
+                        ⏭️ Skip
+                    </button>
+                </div>
+
+                <div id="feedbackMsg"
+                    style="margin-top: 1.5rem; padding: 1rem; border-radius: 12px; text-align: center; display: none;">
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-item-label">Runs</div>
+                    <div class="stat-item-value" id="scoreDisplay">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Balls</div>
+                    <div class="stat-item-value" id="ballsDisplay">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Accuracy</div>
+                    <div class="stat-item-value" id="accuracyDisplay">0%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Streak</div>
+                    <div class="stat-item-value" id="streakDisplay">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal - Cricket Ground -->
+    <div id="resultModal" class="modal">
+        <div class="modal-overlay">
+            <div class="cricket-background"></div>
+            <div class="cricket-background right"></div>
+        </div>
+
+        <div class="modal-content">
+            <div id="resultEmoji" class="modal-emoji">🏆</div>
+            <div class="modal-title" id="resultTitle">VICTORY!</div>
+            <div class="modal-subtitle" id="resultSubtitle">Outstanding performance!</div>
+
+            <!-- Cricket Field Graphics -->
+            <div class="cricket-field">
+                <div class="cricket-graphic bat">🏏</div>
+                <div class="cricket-graphic ball">⚪</div>
+                <div class="cricket-graphic stumps">⚡</div>
+                <div class="cricket-graphic crowd-left">👏 👏</div>
+                <div class="cricket-graphic crowd-right">👏 👏</div>
+            </div>
+
+            <!-- Scorecard -->
+            <div class="scorecard-modal">
+                <div class="scorecard-row">
+                    <div class="scorecard-item">
+                        <div class="scorecard-label">Final Score</div>
+                        <div class="scorecard-value" id="finalScore">0</div>
+                    </div>
+                    <div class="scorecard-item">
+                        <div class="scorecard-label">Target</div>
+                        <div class="scorecard-value" style="color: var(--secondary);" id="finalTarget">48</div>
+                    </div>
+                </div>
+
+                <div class="scorecard-row">
+                    <div class="scorecard-item">
+                        <div class="scorecard-label">Accuracy</div>
+                        <div class="scorecard-value" id="finalAccuracy">0%</div>
+                    </div>
+                    <div class="scorecard-item">
+                        <div class="scorecard-label">Best Streak</div>
+                        <div class="scorecard-value" style="color: var(--success);" id="finalStreak">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="achievementBadge"></div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="resetGame()">🔄 Play Again</button>
+                <button class="btn btn-primary" onclick="shareScore()">📊 Share</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+ADVANCED MATCH SETTINGS SYSTEM
+Replace your existing gameState + shot system with this
+For: Math Premier League Cricket Game
+========================= -->
+
+    <script>
+        // =========================
+        // MATCH MODES
+        // =========================
+        const matchModes = {
+            Easy: {
+                target: 18,
+                balls: 12,
+                wickets: 2
+            },
+            Medium: {
+                target: 24,
+                balls: 12,
+                wickets: 2
+            },
+            Hard: {
+                target: 30,
+                balls: 10,
+                wickets: 2
+            },
+            Expert: {
+                target: 36,
+                balls: 10,
+                wickets: 2
+            },
+            Legend: {
+                target: 42,
+                balls: 8,
+                wickets: 2
+            }
+        };
+
+        // =========================
+        // SELECTED MATCH MODE
+        // =========================
+        let currentMatchMode = "Expert";
+
+        // =========================
+        // GAME STATE
+        // =========================
+        let gameState = {
+            score: 0,
+            wickets: 0,
+            balls: 0,
+            maxBalls: matchModes[currentMatchMode].balls,
+            maxWickets: matchModes[currentMatchMode].wickets,
+            target: matchModes[currentMatchMode].target,
+
+            streak: 0,
+            maxStreak: 0,
+            totalCorrect: 0,
+            totalAttempts: 0,
+
+            currentQuestion: '',
+            currentAnswer: '',
+            currentRuns: 0,
+            currentDifficulty: '',
+
+            timer: 15,
+            timerInterval: null,
+
+            isFreeHit: false,
+            isNoBall: false
+        };
+
+        // =========================
+        // DIFFICULTY SETTINGS
+        // =========================
+        const difficulties = {
+            Easy: {
+                types: ['addition', 'subtraction'],
+                timeLimit: 30
+            },
+
+            Medium: {
+                types: ['multiplication', 'percentage'],
+                timeLimit: 30
+            },
+
+            Hard: {
+                types: ['division', 'algebra'],
+                timeLimit: 30
+            },
+
+            Expert: {
+                types: ['bodmas', 'sequence', 'equation'],
+                timeLimit: 30
+            },
+
+            Extreme: {
+                types: ['logic', 'advanced'],
+                timeLimit: 30
+            }
+        };
+
+        // =========================
+        // RANDOM NUMBER
+        // =========================
+        function rand(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // =========================
+        // PROGRESSIVE DIFFICULTY
+        // =========================
+        function getProgressiveDifficulty() {
+
+            if (gameState.balls <= 1) return "Easy";
+            if (gameState.balls <= 3) return "Medium";
+            if (gameState.balls <= 5) return "Hard";
+            if (gameState.balls <= 7) return "Expert";
+
+            return "Extreme";
+        }
+
+        // =========================
+        // GENERATE QUESTION
+        // =========================
+        function generateQuestion() {
+
+            const level = getProgressiveDifficulty();
+
+            const typesList = difficulties[level].types;
+            const type = typesList[Math.floor(Math.random() * typesList.length)];
+
+            let a, b, c, d;
+            let question, answer;
+
+            switch (type) {
+
+                case 'addition':
+                    a = rand(20, 99);
+                    b = rand(20, 99);
+
+                    question = `${a} + ${b}`;
+                    answer = a + b;
+                    break;
+
+                case 'subtraction':
+                    a = rand(80, 200);
+                    b = rand(10, 70);
+
+                    question = `${a} − ${b}`;
+                    answer = a - b;
+                    break;
+
+                case 'multiplication':
+                    a = rand(11, 25);
+                    b = rand(3, 15);
+
+                    question = `${a} × ${b}`;
+                    answer = a * b;
+                    break;
+
+                case 'percentage':
+                    a = rand(10, 90);
+                    b = rand(100, 500);
+
+                    question = `${a}% of ${b}`;
+                    answer = Number(((a / 100) * b).toFixed(2));
+                    break;
+
+                case 'division':
+                    b = rand(2, 15);
+                    answer = rand(10, 40);
+                    a = answer * b;
+
+                    question = `${a} ÷ ${b}`;
+                    break;
+
+                case 'algebra':
+
+                    do {
+                        a = rand(-9, 9);
+                    } while (a === 0);
+
+                    answer = rand(-10, 20);
+                    b = rand(-20, 20);
+
+                    c = (a * answer) + b;
+
+                    question = `${a}x ${b >= 0 ? '+' : '-'} ${Math.abs(b)} = ${c}`;
+
+                    break;;
+
+                case 'bodmas':
+
+                    const patterns = rand(1, 5);
+
+                    switch (patterns) {
+
+                        // (a × b) + c
+                        case 1:
+                            a = rand(1, 12);
+                            b = rand(1, 12);
+                            c = rand(-10, 20);
+
+                            answer = (a * b) + c;
+
+                            question = `(${a} × ${b}) ${c >= 0 ? '+' : '-'} ${Math.abs(c)}`;
+                            break;
+
+                        // (a + b) × c
+                        case 2:
+                            a = rand(1, 15);
+                            b = rand(1, 15);
+                            c = rand(1, 10);
+
+                            answer = (a + b) * c;
+
+                            question = `(${a} + ${b}) × ${c}`;
+                            break;
+
+                        // (a - b) × c
+                        case 3:
+                            a = rand(5, 20);
+                            b = rand(1, 10);
+                            c = rand(1, 10);
+
+                            answer = (a - b) * c;
+
+                            question = `(${a} - ${b}) × ${c}`;
+                            break;
+
+                        // (a × b) ÷ c
+                        case 4:
+                            c = rand(1, 10);
+                            answer = rand(1, 20);
+
+                            b = rand(1, 10);
+                            a = (answer * c) / b;
+
+                            a = Number(a.toFixed(2));
+
+                            const total = a * b;
+
+                            answer = Number((total / c).toFixed(2));
+
+                            question = `(${a} × ${b}) ÷ ${c}`;
+                            break;
+
+                        // a + (b × c)
+                        case 5:
+                            a = rand(-10, 20);
+                            b = rand(1, 12);
+                            c = rand(1, 12);
+
+                            answer = a + (b * c);
+
+                            question = `${a} + (${b} × ${c})`;
+                            break;
+                    }
+
+                    break;
+
+                case 'sequence':
+                    a = rand(2, 10);
+
+                    question = `${a}, ${a * 2}, ${a * 3}, ${a * 4}, ?`;
+                    answer = a * 5;
+                    break;
+
+                case 'equation':
+                    a = rand(2, 6);
+                    b = rand(10, 30);
+                    answer = rand(5, 15);
+
+                    c = (a * answer) - b;
+
+                    question = `${a}x - ${b} = ${c}`;
+                    break;
+
+                case 'logic':
+                    a = rand(2, 10);
+
+                    question = `${a}, ${a + 3}, ${a + 8}, ${a + 15}, ?`;
+
+                    answer = a + 24;
+                    break;
+
+                case 'advanced':
+                    a = rand(10, 25);
+                    b = rand(5, 15);
+                    c = rand(20, 60);
+
+                    question = `(${a} × ${b}) − ${c}`;
+
+                    answer = (a * b) - c;
+                    break;
+            }
+
+            return {
+                question,
+                answer,
+                level
+            };
+        }
+
+        function formatAnswer(answer) {
+            if (Number.isInteger(answer)) {
+                return answer.toString();
+            }
+            return Number(answer.toFixed(2)).toString();
+        }
+
+        // =========================
+        // RANDOM NO BALL
+        // =========================
+        function shouldTriggerNoBall() {
+
+            return Math.random() < 0.15;
+        }
+
+        // =========================
+        // SELECT SHOT
+        // =========================
+        function selectShot(name, runs) {
+
+            clearInterval(gameState.timerInterval);
+
+            const q = generateQuestion();
+
+            gameState.currentQuestion = q.question;
+            gameState.currentAnswer = q.answer;
+            gameState.currentRuns = runs;
+            gameState.currentDifficulty = q.level;
+
+            gameState.timer = difficulties[q.level].timeLimit;
+
+            gameState.isNoBall = shouldTriggerNoBall();
+
+            if (gameState.isNoBall) {
+
+                gameState.isFreeHit = true;
+
+                gameState.score += 1;
+
+                showSpecialMessage("🚨 NO BALL +1 RUN");
+
+            } else {
+
+                gameState.isFreeHit = false;
+            }
+
+            document.getElementById('defaultScreen').style.display = 'none';
+            document.getElementById('questionScreen').style.display = 'block';
+
+            document.getElementById('questionText').textContent = q.question;
+
+            document.getElementById('shotNameDisplay').textContent =
+                gameState.isFreeHit
+                    ? `${name} ⚡ FREE HIT`
+                    : name;
+
+            const badge = document.getElementById('difficultyBadge');
+
+            badge.textContent = q.level.toUpperCase();
+
+            badge.className =
+                `difficulty-badge difficulty-${q.level.toLowerCase()}`;
+
+            document.getElementById('answerInput').value = '';
+
+            document.getElementById('answerInput').focus();
+
+            startTimer();
+
+            updateStats();
+        }
+
+        // =========================
+        // TIMER
+        // =========================
+        function startTimer() {
+
+            updateTimerDisplay();
+
+            gameState.timerInterval = setInterval(() => {
+
+                gameState.timer--;
+
+                updateTimerDisplay();
+
+                if (gameState.timer <= 0) {
+
+                    clearInterval(gameState.timerInterval);
+
+                    if (gameState.isFreeHit) {
+
+                        showFeedback("⚡ FREE HIT SAFE", "success");
+
+                        resetRound();
+
+                    } else {
+
+                        handleWicket();
+                    }
+                }
+
+            }, 1000);
+        }
+
+        // =========================
+        // TIMER DISPLAY
+        // =========================
+        function updateTimerDisplay() {
+
+            const display = document.getElementById('timerDisplay');
+
+            const seconds =
+                gameState.timer < 10
+                    ? '0' + gameState.timer
+                    : gameState.timer;
+
+            display.textContent = `00:${seconds}`;
+
+            // LAST 2 BALL PRESSURE
+            if (gameState.maxBalls - gameState.balls <= 2) {
+
+                display.style.color = '#ff1744';
+
+                document.body.style.animation =
+                    'shake 0.4s infinite';
+
+            } else {
+
+                document.body.style.animation = '';
+            }
+        }
+
+        // =========================
+        // SUBMIT ANSWER
+        // =========================
+        function submitAnswer() {
+
+            clearInterval(gameState.timerInterval);
+
+            const userAnswerText =
+                document.getElementById('answerInput')
+                    .value
+                    .trim();
+
+            const userAnswer = parseFloat(userAnswerText);
+            const correctAnswer = parseFloat(gameState.currentAnswer);
+            const isCorrect =
+                !isNaN(userAnswer) &&
+                Math.abs(userAnswer - correctAnswer) < 0.001;
+
+            // No Ball doesn't count delivery
+            if (!gameState.isNoBall) {
+                gameState.balls++;
+            }
+
+            gameState.totalAttempts++;
+
+            if (isCorrect) {
+
+                gameState.score += gameState.currentRuns;
+
+                gameState.streak++;
+
+                gameState.totalCorrect++;
+
+                if (gameState.streak > gameState.maxStreak) {
+                    gameState.maxStreak = gameState.streak;
+                }
+
+                if (gameState.currentRuns === 6) {
+
+                    triggerSixAnimation();
+
+                    showFeedback(
+                        `🔥 SIX! +${gameState.currentRuns}`,
+                        'success'
+                    );
+
+                } else if (gameState.currentRuns === 4) {
+
+                    triggerFourAnimation();
+
+                    showFeedback(
+                        `⚡ FOUR! +${gameState.currentRuns}`,
+                        'success'
+                    );
+
+                } else {
+
+                    showFeedback(
+                        `✅ +${gameState.currentRuns} RUN`,
+                        'success'
+                    );
+                }
+
+                setTimeout(() => {
+
+                    if (gameState.score >= gameState.target) {
+
+                        endGame(true);
+
+                    } else if (
+                        gameState.balls >= gameState.maxBalls
+                    ) {
+
+                        endGame(false);
+
+                    } else {
+
+                        resetRound();
+                    }
+
+                }, 1200);
+
+            } else {
+
+                gameState.streak = 0;
+
+                if (gameState.isFreeHit) {
+
+                    showFeedback(
+                        "⚡ FREE HIT - NO WICKET",
+                        "success"
+                    );
+
+                    setTimeout(resetRound, 1000);
+
+                } else {
+
+                    showFeedback(
+                        `❌ Correct: ${formatAnswer(gameState.currentAnswer)}`,
+                        'error'
+                    );
+
+                    setTimeout(() => {
+                        handleWicket();
+                    }, 5000);
+                }
+            }
+
+            updateStats();
+        }
+
+        // =========================
+        // WICKET
+        // =========================
+        function handleWicket() {
+
+            gameState.wickets++;
+
+            triggerOutAnimation();
+
+            updateWicketDisplay();
+
+            if (
+                gameState.wickets >= gameState.maxWickets
+            ) {
+
+                setTimeout(() => {
+
+                    endGame(false);
+
+                }, 1000);
+
+            } else {
+
+                setTimeout(resetRound, 1000);
+            }
+        }
+
+        // =========================
+        // RESET ROUND
+        // =========================
+        function resetRound() {
+
+            document.getElementById('questionScreen').style.display =
+                'none';
+
+            document.getElementById('defaultScreen').style.display =
+                'block';
+
+            document.getElementById('feedbackMsg').style.display =
+                'none';
+        }
+
+        // =========================
+        // SPECIAL MESSAGE
+        // =========================
+        function showSpecialMessage(text) {
+
+            const msg = document.createElement('div');
+
+            msg.innerHTML = text;
+
+            msg.style.position = 'fixed';
+            msg.style.top = '20%';
+            msg.style.left = '50%';
+            msg.style.transform = 'translateX(-50%)';
+
+            msg.style.padding = '20px 40px';
+            msg.style.background = '#ff1744';
+            msg.style.color = 'white';
+
+            msg.style.fontSize = '2rem';
+            msg.style.fontWeight = '900';
+
+            msg.style.borderRadius = '20px';
+
+            msg.style.zIndex = '9999';
+
+            document.body.appendChild(msg);
+
+            setTimeout(() => {
+                msg.remove();
+            }, 1500);
+        }
+
+        // =========================
+        // SHOT BUTTONS
+        // Replace Existing Buttons
+        // =========================
+        function loadShotButtons() {
+
+            document.querySelector('.shots-grid').innerHTML = `
+
+        <button class="shot-card easy"
+            onclick="selectShot('Defensive',1)">
+            <div class="shot-name">🛡️ Defensive</div>
+            <div class="shot-reward">1 RUN</div>
+        </button>
+
+        <button class="shot-card easy"
+            onclick="selectShot('Sweep',2)">
+            <div class="shot-name">🌀 Sweep</div>
+            <div class="shot-reward">2 RUNS</div>
+        </button>
+
+        <button class="shot-card medium"
+            onclick="selectShot('Drive',4)">
+            <div class="shot-name">🎯 Drive</div>
+            <div class="shot-reward">4 RUNS</div>
+        </button>
+
+        <button class="shot-card hard"
+            onclick="selectShot('Lofted Shot',6)">
+            <div class="shot-name">🚀 Lofted</div>
+            <div class="shot-reward">6 RUNS</div>
+        </button>
+    `;
+        }
+
+        // =========================
+        // INITIALIZE
+        // =========================
+        document.addEventListener('DOMContentLoaded', () => {
+
+            loadShotButtons();
+
+            document.getElementById('target').textContent =
+                gameState.target;
+
+            document.getElementById('targetScore').textContent =
+                gameState.target;
+        });
+        function showFeedback(message, type) {
+
+            const feedback =
+                document.getElementById('feedbackMsg');
+
+            feedback.style.display = 'block';
+
+            feedback.innerHTML = message;
+
+            if (type === 'success') {
+
+                feedback.style.background =
+                    'rgba(0,230,118,0.15)';
+
+                feedback.style.color =
+                    '#00e676';
+
+                feedback.style.border =
+                    '2px solid #00e676';
+
+            } else {
+
+                feedback.style.background =
+                    'rgba(255,23,68,0.15)';
+
+                feedback.style.color =
+                    '#ff1744';
+
+                feedback.style.border =
+                    '2px solid #ff1744';
+            }
+        }
+
+        // =========================
+        // UPDATE STATS
+        // =========================
+        function updateStats() {
+
+            document.getElementById('scoreDisplay')
+                .textContent = gameState.score;
+
+            document.getElementById('playerScore')
+                .textContent = gameState.score;
+
+            document.getElementById('ballsDisplay')
+                .textContent =
+                gameState.balls +
+                "/" +
+                gameState.maxBalls;
+
+            document.getElementById('streakDisplay')
+                .textContent = gameState.streak;
+
+            const accuracy =
+                gameState.totalAttempts > 0
+                    ? Math.round(
+                        (gameState.totalCorrect /
+                            gameState.totalAttempts) * 100
+                    )
+                    : 0;
+
+            document.getElementById('accuracyDisplay')
+                .textContent = accuracy + "%";
+        }
+
+        // =========================
+        // UPDATE WICKETS
+        // =========================
+        function updateWicketDisplay() {
+
+            const display =
+                document.getElementById('wicketDisplay');
+
+            display.innerHTML = '';
+
+            for (let i = 0; i < gameState.maxWickets; i++) {
+
+                const div = document.createElement('div');
+
+                div.className =
+                    i < gameState.wickets
+                        ? 'wicket-icon fallen'
+                        : 'wicket-icon';
+
+                div.innerHTML =
+                    i < gameState.wickets
+                        ? '❌'
+                        : '🏏';
+
+                display.appendChild(div);
+            }
+        }
+
+        // =========================
+        // FOUR ANIMATION
+        // =========================
+        function triggerFourAnimation() {
+
+            const text = document.createElement('div');
+
+            text.className =
+                'animation-text four-text';
+
+            text.innerHTML = '⚡ FOUR ⚡';
+
+            text.style.left = '50%';
+            text.style.top = '40%';
+
+            document.body.appendChild(text);
+
+            setTimeout(() => {
+                text.remove();
+            }, 1200);
+        }
+
+        // =========================
+        // SIX ANIMATION
+        // =========================
+        function triggerSixAnimation() {
+
+            const text = document.createElement('div');
+
+            text.className =
+                'animation-text six-text';
+
+            text.innerHTML = '🔥 SIX 🔥';
+
+            text.style.left = '50%';
+            text.style.top = '35%';
+
+            document.body.appendChild(text);
+
+            setTimeout(() => {
+                text.remove();
+            }, 1200);
+        }
+
+        // =========================
+        // OUT ANIMATION
+        // =========================
+        function triggerOutAnimation() {
+
+            const text = document.createElement('div');
+
+            text.className =
+                'animation-text out-text';
+
+            text.innerHTML = '💥 OUT 💥';
+
+            text.style.left = '50%';
+            text.style.top = '35%';
+
+            document.body.appendChild(text);
+
+            setTimeout(() => {
+                text.remove();
+            }, 1000);
+        }
+
+        // =========================
+        // SKIP QUESTION
+        // =========================
+        function skipQuestion() {
+
+            clearInterval(gameState.timerInterval);
+
+            gameState.balls++;
+
+            handleWicket();
+
+            updateStats();
+        }
+
+        // =========================
+        // RESET ROUND FIX
+        // =========================
+        function resetRound() {
+
+            clearInterval(gameState.timerInterval);
+
+            gameState.timer = 30;
+
+            gameState.isFreeHit = false;
+
+            gameState.isNoBall = false;
+
+            document.getElementById('questionScreen')
+                .style.display = 'none';
+
+            document.getElementById('defaultScreen')
+                .style.display = 'block';
+
+            document.getElementById('feedbackMsg')
+                .style.display = 'none';
+
+            document.getElementById('answerInput')
+                .value = '';
+
+            document.body.style.animation = '';
+
+            updateStats();
+        }
+
+        // =========================
+        // END GAME
+        // =========================
+        function endGame(won) {
+
+            const modal =
+                document.getElementById('resultModal');
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('finalScore')
+                .textContent = gameState.score;
+
+            document.getElementById('finalTarget')
+                .textContent = gameState.target;
+
+
+            const accuracy =
+                gameState.totalAttempts > 0
+                    ? Math.round(
+                        (gameState.totalCorrect /
+                            gameState.totalAttempts) * 100
+                    )
+                    : 0;
+
+            document.getElementById('finalAccuracy')
+                .textContent = accuracy + "%";
+
+            document.getElementById('finalStreak')
+                .textContent = gameState.maxStreak;
+
+            if (won) {
+
+                document.getElementById('resultTitle')
+                    .innerHTML = '🏆 VICTORY';
+
+                document.getElementById('resultSubtitle')
+                    .innerHTML =
+                    'Brilliant Chase Masterclass!';
+
+            } else {
+
+                document.getElementById('resultTitle')
+                    .innerHTML = '💥 ALL OUT';
+
+                document.getElementById('resultSubtitle')
+                    .innerHTML =
+                    'Better luck next innings!';
+            }
+        }
+
+        // =========================
+        // RESET GAME
+        // =========================
+        function resetGame() {
+
+            document.body.style.overflow = 'auto';
+
+            location.reload();
+        }
+
+    </script>
+
+</body>
+
+</html>
