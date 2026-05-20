@@ -31,218 +31,90 @@
             font-family: 'Poppins', sans-serif;
             background: var(--dark-bg);
             color: #e0e0e0;
-            overflow-x: hidden;
-            overflow: hidden;
             background-image:
-                /*radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 23, 68, 0.08) 0%, transparent 50%);*/
-                background radial-gradient(circle at top,
-                    rgba(0, 255, 255, 0.12) 0%,
-                    transparent 35%),
-
-                radial-gradient(circle at bottom right,
-                    rgba(255, 0, 128, 0.10) 0%,
-                    transparent 40%);
-        }
-
-        .glass-effect {
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
+                radial-gradient(circle at top, rgba(0, 255, 255, 0.12) 0%, transparent 100%),
+                radial-gradient(circle at bottom right, rgba(255, 0, 128, 0.10) 0%, transparent 40%);
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(0, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* ===== CRICKET ANIMATIONS ===== */
         @keyframes ballBounce {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            25% {
-                transform: translateY(-30px) rotate(90deg);
-            }
-
-            50% {
-                transform: translateY(0) rotate(180deg);
-            }
-
-            75% {
-                transform: translateY(-20px) rotate(270deg);
-            }
-
-            100% {
-                transform: translateY(0) rotate(360deg);
-            }
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(90deg); }
+            50% { transform: translateY(0) rotate(180deg); }
+            75% { transform: translateY(-20px) rotate(270deg); }
+            100% { transform: translateY(0) rotate(360deg); }
         }
 
         @keyframes batSwing {
-            0% {
-                transform: rotate(0deg);
-                transform-origin: right bottom;
-            }
-
-            50% {
-                transform: rotate(-120deg);
-                transform-origin: right bottom;
-            }
-
-            100% {
-                transform: rotate(0deg);
-                transform-origin: right bottom;
-            }
+            0% { transform: rotate(0deg); transform-origin: right bottom; }
+            50% { transform: rotate(-120deg); transform-origin: right bottom; }
+            100% { transform: rotate(0deg); transform-origin: right bottom; }
         }
 
         @keyframes wicketFall {
-            0% {
-                transform: rotate(0deg);
-                opacity: 1;
-            }
-
-            50% {
-                transform: rotate(45deg) translateX(20px);
-                opacity: 1;
-            }
-
-            100% {
-                transform: rotate(90deg) translateX(40px);
-                opacity: 0;
-            }
+            0% { transform: rotate(0deg); opacity: 1; }
+            50% { transform: rotate(45deg) translateX(20px); opacity: 1; }
+            100% { transform: rotate(90deg) translateX(40px); opacity: 0; }
         }
 
         @keyframes sixFire {
-            0% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1.5) translateY(-100px);
-                opacity: 0;
-            }
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
         }
 
         @keyframes boundaryGlow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            }
-
-            50% {
-                box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), inset 0 0 20px rgba(0, 230, 118, 0.4);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 230, 118, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), inset 0 0 20px rgba(0, 230, 118, 0.4); }
         }
 
         @keyframes outAnimation {
-            0% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.2) rotate(15deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(0.5) rotate(30deg);
-                opacity: 0;
-            }
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.2) rotate(15deg); opacity: 1; }
+            100% { transform: scale(0.5) rotate(30deg); opacity: 0; }
         }
 
         @keyframes crowdCheer {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
-            }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        .ball-bounce {
-            animation: ballBounce 0.8s ease-in-out;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
-        .bat-swing {
-            animation: batSwing 0.6s ease-in-out;
-        }
+        .ball-bounce { animation: ballBounce 0.8s ease-in-out; }
+        .bat-swing { animation: batSwing 0.6s ease-in-out; }
+        .wicket-fall { animation: wicketFall 0.8s ease-in-out; }
+        .six-fire { animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .boundary-glow { animation: boundaryGlow 1s ease-in-out infinite; }
+        .out-flash { animation: outAnimation 0.8s ease-in-out; }
+        .crowd-cheer { animation: crowdCheer 0.5s ease-in-out; }
+        .slide-down { animation: slideDown 0.6s ease-out; }
+        .shake-effect { animation: shake 0.4s ease-in-out; }
 
-        .wicket-fall {
-            animation: wicketFall 0.8s ease-in-out;
-        }
-
-        .six-fire {
-            animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .boundary-glow {
-            animation: boundaryGlow 1s ease-in-out infinite;
-        }
-
-        .out-flash {
-            animation: outAnimation 0.8s ease-in-out;
-        }
-
-        .crowd-cheer {
-            animation: crowdCheer 0.5s ease-in-out;
-        }
-
-        .slide-down {
-            animation: slideDown 0.6s ease-out;
-        }
-
-        .shake-effect {
-            animation: shake 0.4s ease-in-out;
-        }
-
-        /* ===== UI ELEMENTS ===== */
         .top-nav {
             position: sticky;
             top: 0;
@@ -283,26 +155,23 @@
 
         .game-container {
             max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 1rem auto 0 auto;
+            width: 100%;
+            padding: 12px;
         }
 
         .game-arena {
-            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8), rgba(15, 23, 42, 0.8));
+            background: radial-gradient(circle at top, rgba(0, 255, 255, 0.12), transparent 40%),
+                        linear-gradient(135deg, #071120, #0a1630);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 1.5rem;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
-
-            /* overflow: hidden; */
-            .game-arena {
-                width: 95%;
-                max-width: 920px;
-                min-height: 90vh;
-                margin: 20px auto;
-            }
-
+            width: 100%;
+            max-width: 920px;
+            margin: 20px auto;
+            overflow: visible;
         }
 
         .game-arena::before {
@@ -318,17 +187,6 @@
             opacity: 0.3;
         }
 
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: rgba(0, 217, 255, 0.05);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-        }
-
         .scorecard {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -339,8 +197,6 @@
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.6));
             border-radius: 16px;
             border: 1px solid var(--border-color);
-            width: auto;
-            height: auto;
         }
 
         .player-card {
@@ -420,9 +276,8 @@
             border: 2px solid var(--border-color);
             margin: 1rem 0;
             position: relative;
-            overflow: hidden;
+            overflow: auto;
             width: 100%;
-            Height: auto;
         }
 
         .difficulty-badge {
@@ -484,20 +339,6 @@
             color: var(--primary);
         }
 
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.6;
-                transform: scale(1.05);
-            }
-        }
-
         .answer-input {
             width: 100%;
             padding: 0.5rem;
@@ -522,11 +363,9 @@
 
         .action-buttons {
             display: flex;
-            grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-top: 0.75rem;
-            width: 750px;
-            height: auto;
+            width: 100%;
         }
 
         .btn {
@@ -543,14 +382,12 @@
             position: relative;
             overflow: hidden;
             width: 100%;
-            height:auto;    
-
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), #00a8cc);
             color: var(--dark-bg);
-            grid-column: 1 / -1;
+            flex: 1;
         }
 
         .btn-primary:hover {
@@ -562,6 +399,7 @@
             background: rgba(0, 217, 255, 0.1);
             color: var(--primary);
             border: 2px solid var(--primary);
+            flex: 1;
         }
 
         .btn-secondary:hover {
@@ -570,7 +408,7 @@
         }
 
         .shots-grid {
-            display: flex;
+            display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.9rem 0.5rem;
             margin-top: 0.9rem;
@@ -584,7 +422,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            width: 375px;
+            width: 100%;
             height: 75px;
         }
 
@@ -627,7 +465,7 @@
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
-            margin-top: 2rem;
+            margin-top: 1rem;
             flex-wrap: wrap;
         }
 
@@ -653,23 +491,19 @@
             font-weight: 600;
         }
 
-        /* ===== CRICKET GROUND MODAL ===== */
         .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100vw;
             height: 100vh;
-            min-height: 100vh;
-            z-index: 1000;
-            align-items: center;
+            z-index: 9999;
             justify-content: center;
-            padding: 1rem;
-            animation: fadeIn 0.3s ease;
-            overflow-y: hidden;
-            overscroll-behavior: contain;
+            align-items: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.65);
+            overflow: auto;
         }
 
         .modal.active {
@@ -682,43 +516,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg,
-                    rgba(34, 197, 94, 0.3) 0%,
-                    rgba(139, 92, 46, 0.2) 50%,
-                    rgba(51, 65, 85, 0.3) 100%);
-            background-image:
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grass" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0,50 Q25,40 50,50 T100,50" stroke="%23166534" fill="none" stroke-width="2"/><path d="M10,55 Q35,45 60,55 T110,55" stroke="%234ade80" fill="none" stroke-width="1.5"/></pattern></defs><rect width="1200" height="600" fill="%231a472a"/><rect width="1200" height="600" fill="url(%23grass)" opacity="0.3"/></svg>');
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(139, 92, 46, 0.2) 50%, rgba(51, 65, 85, 0.3) 100%);
             backdrop-filter: blur(5px);
+            overflow: hidden;
         }
 
         .modal-content {
-
             position: relative;
-            z-index: 10;
-
-            background: linear-gradient(135deg,
-                    rgba(10, 14, 39, 0.98),
-                    rgba(15, 23, 42, 0.98));
-
-            border-radius: 24px;
-
-            padding: 2rem;
-
-            border: 2px solid var(--primary);
-
             width: 100%;
-            max-width: 600px;
-
-            max-height: 95vh;
-
+            max-width: 520px;
+            margin: auto;
+            max-height: 90vh;
             overflow-y: auto;
-
-            text-align: center;
-
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.9),
-                0 0 60px rgba(0, 217, 255, 0.3);
+            z-index: 10000;
+            border-radius: 24px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.98), rgba(15, 23, 42, 0.98));
+            border: 2px solid rgba(0, 217, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
         }
 
         .cricket-background {
@@ -748,7 +564,9 @@
         }
 
         .modal-title {
-            font-size: 1.75rem;
+            font-size: 2rem;
+            line-height: 1.1;
+            margin-bottom: 6px;
             font-weight: 900;
             margin: 1rem 0;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -769,9 +587,8 @@
             background: rgba(0, 217, 255, 0.05);
             border: 2px solid var(--primary);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.2rem;
             margin: 0.75rem 0;
-
         }
 
         .scorecard-row {
@@ -817,17 +634,19 @@
         }
 
         .modal-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            display: flex;
+            gap: 12px;
             margin-top: 1rem;
-            align-items: center;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
         }
 
         .cricket-field {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 130px;
             background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(139, 92, 46, 0.1));
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -872,7 +691,6 @@
             animation: crowdCheer 1s infinite;
         }
 
-        /* Animation for animations text */
         .animation-text {
             position: fixed;
             font-weight: 900;
@@ -897,8 +715,14 @@
             animation: outAnimation 0.8s ease-in-out;
         }
 
-        @media (max-width: 768px) {
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            min-height: 100vh;
+            overflow: auto;
+        }
 
+        @media (max-width: 768px) {
             .shots-grid {
                 grid-template-columns: 1fr;
             }
@@ -916,64 +740,65 @@
             }
 
             .modal-content {
-
-                padding: 1.25rem;
-
+                max-width: 100%;
+                padding: 1rem;
                 border-radius: 18px;
+            }
 
-                max-height: 92vh;
+            .cricket-field {
+                height: 100px;
             }
 
             .modal-title {
-
                 font-size: 1.8rem;
             }
 
-            .modal-subtitle {
+            .scorecard-value {
+                font-size: 1.3rem;
+            }
 
+            .modal-subtitle {
                 font-size: 0.9rem;
             }
 
             .modal-emoji {
-
                 font-size: 3rem;
-
                 margin-bottom: 0.75rem;
             }
 
-            .cricket-field {
-
-                height: 100px;
-            }
-
             .cricket-graphic {
-
                 font-size: 1.5rem;
             }
 
             .scorecard-row {
-
                 grid-template-columns: 1fr;
             }
 
-            .scorecard-value {
-
-                font-size: 1.3rem;
-            }
-
             .achievement-badge {
-
                 padding: 0.75rem;
             }
 
             .achievement-text {
-
                 font-size: 0.9rem;
             }
 
-            .modal-buttons {
+            * {
+                animation-duration: 0.6s !important;
+            }
 
-                grid-template-columns: 1fr;
+            .game-arena,
+            .modal-content {
+                backdrop-filter: none;
+            }
+
+            .game-arena::before {
+                display: none;
+            }
+
+            .btn:hover,
+            .shot-card:hover {
+                transform: none;
+                box-shadow: none;
             }
         }
     </style>
@@ -987,11 +812,7 @@
                 <div class="logo-icon">🏏</div>
                 <span>Math Premier League</span>
             </div>
-            <div style="display: flex; gap: 2rem; align-items: center;">
-
-            </div>
         </div>
-    </div>
     </div>
 
     <!-- Main Game Container -->
@@ -1009,8 +830,7 @@
 
                 <div class="vs-section">
                     <div class="vs-badge">VS</div>
-                    <div
-                        style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 0.75rem;">
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 0.75rem;">
                         Target: <span id="target">48</span></div>
                 </div>
 
@@ -1024,8 +844,7 @@
 
             <!-- Wickets Display -->
             <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div
-                    style="font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 600;">
+                <div style="font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 600;">
                     Wickets Remaining</div>
                 <div class="wicket-display" id="wicketDisplay">
                     <div class="wicket-icon">🏃</div>
@@ -1035,13 +854,11 @@
 
             <!-- Default Screen -->
             <div id="defaultScreen">
-                <div style="text-align: center; padding: 3rem 0;">
+                <div style="text-align: center; padding: 1rem 0;">
                     <div style="font-size: 2.5rem; margin-bottom: 0.50rem; animation: ballBounce 2s infinite;">🏏</div>
                     <h2 class="gradient-text" style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">
-                        Select
-                        Your Shot</h2>
-                    <p style="color: #999; font-size: 1.1rem; margin-bottom: 2.5rem;">Choose difficulty and solve the
-                        math challenge</p>
+                        Select Your Shot</h2>
+                    <p style="color: #999; font-size: 1.1rem; margin-bottom: 2.5rem;">Choose difficulty and solve the math challenge</p>
                 </div>
 
                 <!-- Shot Selection Grid -->
@@ -1080,15 +897,13 @@
                 </div>
 
                 <div class="question-area">
-                    <div
-                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin-bottom: 0.5rem; font-weight: 600;">
+                    <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin-bottom: 0.5rem; font-weight: 600;">
                         Solve This:</div>
                     <div class="question-text" id="questionText"></div>
                     <div class="timer-display" id="timerDisplay">00:10</div>
                 </div>
 
-                <input id="answerInput" type="number" class="answer-input" placeholder="Enter your answer..."
-                    autocomplete="off" />
+                <input id="answerInput" type="text" class="answer-input" placeholder="Enter your answer..." inputmode="numeric" />
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="submitAnswer()">
@@ -1099,8 +914,7 @@
                     </button>
                 </div>
 
-                <div id="feedbackMsg"
-                    style="margin-top: 1.5rem; padding: 1rem; border-radius: 12px; text-align: center; display: none;">
+                <div id="feedbackMsg" style="margin-top: 1.5rem; padding: 1rem; border-radius: 12px; text-align: center; display: none;">
                 </div>
             </div>
 
@@ -1126,7 +940,7 @@
         </div>
     </div>
 
-    <!-- Game Over Modal - Cricket Ground -->
+    <!-- Game Over Modal -->
     <div id="resultModal" class="modal">
         <div class="modal-overlay">
             <div class="cricket-background"></div>
@@ -1175,140 +989,81 @@
             <div id="achievementBadge"></div>
 
             <div class="modal-buttons">
-                <button class="btn btn-secondary" onclick="resetGame()" align="center">🔄 Play Again</button>
+                <button class="btn btn-secondary" onclick="resetGame()">🔄 Play Again</button>
                 <button class="btn btn-primary" onclick="shareScore()">📊 Share</button>
             </div>
         </div>
     </div>
 
-    <!-- =========================
-ADVANCED MATCH SETTINGS SYSTEM
-Replace your existing gameState + shot system with this
-For: Math Premier League Cricket Game
-========================= -->
-
     <script>
-        // =========================
-        // MATCH MODES
-        // =========================
-        const matchModes = {
-            Easy: {
-                target: 18,
-                balls: 12,
-                wickets: 2
-            },
-            Medium: {
-                target: 24,
-                balls: 12,
-                wickets: 2
-            },
-            Hard: {
-                target: 30,
-                balls: 10,
-                wickets: 2
-            },
-            Expert: {
-                target: 36,
-                balls: 10,
-                wickets: 2
-            },
-            Legend: {
-                target: 42,
-                balls: 8,
-                wickets: 2
-            }
+        const GAME_PHASES = {
+            MENU: 'menu',
+            QUESTION: 'question',
+            TRANSITION: 'transition',
+            ENDED: 'ended'
         };
 
-        // =========================
-        // SELECTED MATCH MODE
-        // =========================
-        let currentMatchMode = "Expert";
+        let isSubmitting = false;
 
-        // =========================
-        // GAME STATE
-        // =========================
         let gameState = {
             score: 0,
             wickets: 0,
             balls: 0,
-            maxBalls: matchModes[currentMatchMode].balls,
-            maxWickets: matchModes[currentMatchMode].wickets,
-            target: matchModes[currentMatchMode].target,
-
+            maxBalls: 12,
+            maxWickets: 2,
+            target: 48,
             streak: 0,
             maxStreak: 0,
             totalCorrect: 0,
             totalAttempts: 0,
-
             currentQuestion: '',
             currentAnswer: '',
             currentRuns: 0,
             currentDifficulty: '',
-
-            timer: 15,
+            timer: 30,
             timerInterval: null,
-
             isFreeHit: false,
-            isNoBall: false
+            isNoBall: false,
+            phase: GAME_PHASES.MENU,
         };
 
-        // =========================
-        // DIFFICULTY SETTINGS
-        // =========================
         const difficulties = {
             Easy: {
                 types: ['addition', 'subtraction'],
                 timeLimit: 30
             },
-
             Medium: {
                 types: ['multiplication', 'percentage'],
                 timeLimit: 30
             },
-
             Hard: {
                 types: ['division', 'algebra'],
                 timeLimit: 30
             },
-
             Expert: {
                 types: ['bodmas', 'sequence', 'equation'],
                 timeLimit: 30
             },
-
             Extreme: {
                 types: ['logic', 'advanced'],
                 timeLimit: 30
             }
         };
 
-        // =========================
-        // RANDOM NUMBER
-        // =========================
         function rand(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        // =========================
-        // PROGRESSIVE DIFFICULTY
-        // =========================
         function getProgressiveDifficulty() {
-
             if (gameState.balls <= 1) return "Easy";
             if (gameState.balls <= 3) return "Medium";
             if (gameState.balls <= 5) return "Hard";
             if (gameState.balls <= 7) return "Expert";
-
             return "Extreme";
         }
 
-        // =========================
-        // GENERATE QUESTION
-        // =========================
         function generateQuestion() {
-
             const level = getProgressiveDifficulty();
-
             const typesList = difficulties[level].types;
             const type = typesList[Math.floor(Math.random() * typesList.length)];
 
@@ -1316,11 +1071,9 @@ For: Math Premier League Cricket Game
             let question, answer;
 
             switch (type) {
-
                 case 'addition':
                     a = rand(20, 99);
                     b = rand(20, 99);
-
                     question = `${a} + ${b}`;
                     answer = a + b;
                     break;
@@ -1328,7 +1081,6 @@ For: Math Premier League Cricket Game
                 case 'subtraction':
                     a = rand(80, 200);
                     b = rand(10, 70);
-
                     question = `${a} − ${b}`;
                     answer = a - b;
                     break;
@@ -1336,7 +1088,6 @@ For: Math Premier League Cricket Game
                 case 'multiplication':
                     a = rand(11, 25);
                     b = rand(3, 15);
-
                     question = `${a} × ${b}`;
                     answer = a * b;
                     break;
@@ -1344,7 +1095,6 @@ For: Math Premier League Cricket Game
                 case 'percentage':
                     a = rand(10, 90);
                     b = rand(100, 500);
-
                     question = `${a}% of ${b}`;
                     answer = Number(((a / 100) * b).toFixed(2));
                     break;
@@ -1353,98 +1103,69 @@ For: Math Premier League Cricket Game
                     b = rand(2, 15);
                     answer = rand(10, 40);
                     a = answer * b;
-
                     question = `${a} ÷ ${b}`;
                     break;
 
                 case 'algebra':
-
                     do {
                         a = rand(-9, 9);
                     } while (a === 0);
-
                     answer = rand(-10, 20);
                     b = rand(-20, 20);
-
                     c = (a * answer) + b;
-
                     question = `${a}x ${b >= 0 ? '+' : '-'} ${Math.abs(b)} = ${c}`;
-
-                    break;;
+                    break;
 
                 case 'bodmas':
-
                     const patterns = rand(1, 5);
-
                     switch (patterns) {
-
-                        // (a × b) + c
                         case 1:
                             a = rand(1, 12);
                             b = rand(1, 12);
                             c = rand(-10, 20);
-
                             answer = (a * b) + c;
-
                             question = `(${a} × ${b}) ${c >= 0 ? '+' : '-'} ${Math.abs(c)}`;
                             break;
 
-                        // (a + b) × c
                         case 2:
                             a = rand(1, 15);
                             b = rand(1, 15);
                             c = rand(1, 10);
-
                             answer = (a + b) * c;
-
                             question = `(${a} + ${b}) × ${c}`;
                             break;
 
-                        // (a - b) × c
                         case 3:
                             a = rand(5, 20);
                             b = rand(1, 10);
                             c = rand(1, 10);
-
                             answer = (a - b) * c;
-
                             question = `(${a} - ${b}) × ${c}`;
                             break;
 
-                        // (a × b) ÷ c
                         case 4:
                             c = rand(1, 10);
                             answer = rand(1, 20);
-
                             b = rand(1, 10);
                             a = (answer * c) / b;
-
                             a = Number(a.toFixed(2));
-
                             const total = a * b;
-
                             answer = Number((total / c).toFixed(2));
-
                             question = `(${a} × ${b}) ÷ ${c}`;
                             break;
 
-                        // a + (b × c)
                         case 5:
                             a = rand(-10, 20);
                             b = rand(1, 12);
                             c = rand(1, 12);
-
                             answer = a + (b * c);
-
                             question = `${a} + (${b} × ${c})`;
                             break;
                     }
-
                     break;
 
                 case 'sequence':
                     a = rand(2, 10);
-
                     question = `${a}, ${a * 2}, ${a * 3}, ${a * 4}, ?`;
                     answer = a * 5;
                     break;
@@ -1453,17 +1174,13 @@ For: Math Premier League Cricket Game
                     a = rand(2, 6);
                     b = rand(10, 30);
                     answer = rand(5, 15);
-
                     c = (a * answer) - b;
-
                     question = `${a}x - ${b} = ${c}`;
                     break;
 
                 case 'logic':
                     a = rand(2, 10);
-
                     question = `${a}, ${a + 3}, ${a + 8}, ${a + 15}, ?`;
-
                     answer = a + 24;
                     break;
 
@@ -1471,9 +1188,7 @@ For: Math Premier League Cricket Game
                     a = rand(10, 25);
                     b = rand(5, 15);
                     c = rand(20, 60);
-
                     question = `(${a} × ${b}) − ${c}`;
-
                     answer = (a * b) - c;
                     break;
             }
@@ -1492,19 +1207,14 @@ For: Math Premier League Cricket Game
             return Number(answer.toFixed(2)).toString();
         }
 
-        // =========================
-        // RANDOM NO BALL
-        // =========================
         function shouldTriggerNoBall() {
-
             return Math.random() < 0.15;
         }
 
-        // =========================
-        // SELECT SHOT
-        // =========================
         function selectShot(name, runs) {
+            if (gameState.phase !== GAME_PHASES.MENU) return;
 
+            gameState.phase = GAME_PHASES.QUESTION;
             clearInterval(gameState.timerInterval);
 
             const q = generateQuestion();
@@ -1513,129 +1223,105 @@ For: Math Premier League Cricket Game
             gameState.currentAnswer = q.answer;
             gameState.currentRuns = runs;
             gameState.currentDifficulty = q.level;
-
             gameState.timer = difficulties[q.level].timeLimit;
-
             gameState.isNoBall = shouldTriggerNoBall();
 
             if (gameState.isNoBall) {
-
                 gameState.isFreeHit = true;
-
                 gameState.score += 1;
-
                 showSpecialMessage("🚨 NO BALL +1 RUN");
-
             } else {
-
                 gameState.isFreeHit = false;
             }
 
             document.getElementById('defaultScreen').style.display = 'none';
             document.getElementById('questionScreen').style.display = 'block';
-
             document.getElementById('questionText').textContent = q.question;
-
-            document.getElementById('shotNameDisplay').textContent =
-                gameState.isFreeHit
-                    ? `${name} ⚡ FREE HIT`
-                    : name;
+            document.getElementById('shotNameDisplay').textContent = gameState.isFreeHit
+                ? `${name} ⚡ FREE HIT`
+                : name;
 
             const badge = document.getElementById('difficultyBadge');
-
             badge.textContent = q.level.toUpperCase();
-
-            badge.className =
-                `difficulty-badge difficulty-${q.level.toLowerCase()}`;
+            badge.className = `difficulty-badge difficulty-${q.level.toLowerCase()}`;
 
             document.getElementById('answerInput').value = '';
-
             document.getElementById('answerInput').focus();
 
             startTimer();
-
             updateStats();
         }
 
-        // =========================
-        // TIMER
-        // =========================
-        function startTimer() {
+        function stopTimer() {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = null;
+        }
 
+        function startTimer() {
+            stopTimer();
             updateTimerDisplay();
 
             gameState.timerInterval = setInterval(() => {
-
                 gameState.timer--;
-
                 updateTimerDisplay();
 
                 if (gameState.timer <= 0) {
+                    stopTimer();
+                    gameState.streak = 0;
 
-                    clearInterval(gameState.timerInterval);
+                    if (!gameState.isNoBall) {
+                        gameState.balls++;
+                    }
 
-                    if (gameState.isFreeHit) {
+                    showFeedback("⏰ TIME UP!", "error");
+                    updateStats();
 
-                        showFeedback("⚡ FREE HIT SAFE", "success");
-
-                        resetRound();
-
+                    if (gameState.balls >= gameState.maxBalls) {
+                        setTimeout(() => {
+                            endGame(false);
+                        }, 1000);
                     } else {
-
-                        handleWicket();
+                        setTimeout(() => {
+                            handleWicket();
+                        }, 1000);
                     }
                 }
-
             }, 1000);
         }
 
-        // =========================
-        // TIMER DISPLAY
-        // =========================
         function updateTimerDisplay() {
-
             const display = document.getElementById('timerDisplay');
-
-            const seconds =
-                gameState.timer < 10
-                    ? '0' + gameState.timer
-                    : gameState.timer;
-
+            const seconds = gameState.timer < 10 ? '0' + gameState.timer : gameState.timer;
             display.textContent = `00:${seconds}`;
 
-            // LAST 2 BALL PRESSURE
-            if (gameState.maxBalls - gameState.balls <= 2) {
-
+            if (gameState.phase !== GAME_PHASES.ENDED && gameState.maxBalls - gameState.balls <= 2) {
                 display.style.color = '#ff1744';
-
-                document.body.style.animation =
-                    'shake 0.4s infinite';
-
+                document.body.style.animation = 'shake 0.4s infinite';
             } else {
-
                 document.body.style.animation = '';
+                display.style.color = '';
             }
         }
 
-        // =========================
-        // SUBMIT ANSWER
-        // =========================
         function submitAnswer() {
+            if (isSubmitting) return;
 
-            clearInterval(gameState.timerInterval);
+            isSubmitting = true;
+            stopTimer();
 
-            const userAnswerText =
-                document.getElementById('answerInput')
-                    .value
-                    .trim();
+            const userAnswerText = document.getElementById('answerInput').value.trim();
+            const validInput = /^-?\d+(\.\d+)?$/.test(userAnswerText);
 
-            const userAnswer = parseFloat(userAnswerText);
+            if (!validInput) {
+                showFeedback("⚠️ Invalid Number", "error");
+                isSubmitting = false;
+                return;
+            }
+
+            const userAnswer = Number(userAnswerText);
             const correctAnswer = parseFloat(gameState.currentAnswer);
-            const isCorrect =
-                !isNaN(userAnswer) &&
-                Math.abs(userAnswer - correctAnswer) < 0.001;
+            const isCorrect = !isNaN(userAnswer) && Math.abs(userAnswer - correctAnswer) < 0.001;
 
-            // No Ball doesn't count delivery
             if (!gameState.isNoBall) {
                 gameState.balls++;
             }
@@ -1643,11 +1329,8 @@ For: Math Premier League Cricket Game
             gameState.totalAttempts++;
 
             if (isCorrect) {
-
                 gameState.score += gameState.currentRuns;
-
                 gameState.streak++;
-
                 gameState.totalCorrect++;
 
                 if (gameState.streak > gameState.maxStreak) {
@@ -1655,129 +1338,77 @@ For: Math Premier League Cricket Game
                 }
 
                 if (gameState.currentRuns === 6) {
-
                     triggerSixAnimation();
-
-                    showFeedback(
-                        `🔥 SIX! +${gameState.currentRuns}`,
-                        'success'
-                    );
-
+                    showFeedback(`🔥 SIX! +${gameState.currentRuns}`, 'success');
                 } else if (gameState.currentRuns === 4) {
-
                     triggerFourAnimation();
-
-                    showFeedback(
-                        `⚡ FOUR! +${gameState.currentRuns}`,
-                        'success'
-                    );
-
+                    showFeedback(`⚡ FOUR! +${gameState.currentRuns}`, 'success');
                 } else {
-
-                    showFeedback(
-                        `✅ +${gameState.currentRuns} RUN`,
-                        'success'
-                    );
+                    showFeedback(`✅ +${gameState.currentRuns} RUN`, 'success');
                 }
 
                 setTimeout(() => {
+                    isSubmitting = false;
 
                     if (gameState.score >= gameState.target) {
-
                         endGame(true);
-
-                    } else if (
-                        gameState.balls >= gameState.maxBalls
-                    ) {
-
+                    } else if (gameState.balls >= gameState.maxBalls) {
                         endGame(false);
-
                     } else {
-
                         resetRound();
                     }
-
                 }, 1200);
-
             } else {
-
                 gameState.streak = 0;
 
                 if (gameState.isFreeHit) {
+                    showFeedback("⚡ FREE HIT - NO WICKET", "success");
 
-                    showFeedback(
-                        "⚡ FREE HIT - NO WICKET",
-                        "success"
-                    );
-
-                    setTimeout(resetRound, 1000);
-
+                    setTimeout(() => {
+                        isSubmitting = false;
+                        resetRound();
+                    }, 1000);
                 } else {
+                    showFeedback(`❌ Correct: ${formatAnswer(gameState.currentAnswer)}`, 'error');
 
-                    showFeedback(
-                        `❌ Correct: ${formatAnswer(gameState.currentAnswer)}`,
-                        'error'
-                    );
-
-                    setTimeout(handleWicket, 1000);
+                    setTimeout(() => {
+                        isSubmitting = false;
+                        handleWicket();
+                    }, 1000);
                 }
             }
 
             updateStats();
         }
 
-        // =========================
-        // WICKET
-        // =========================
         function handleWicket() {
-
             gameState.wickets++;
-
             triggerOutAnimation();
-
             updateWicketDisplay();
 
-            if (
-                gameState.wickets >= gameState.maxWickets
-            ) {
-
+            if (gameState.wickets >= gameState.maxWickets) {
                 setTimeout(() => {
-
                     endGame(false);
-
                 }, 1000);
-
             } else {
-
                 setTimeout(resetRound, 1000);
             }
         }
 
-        // =========================
-        // SPECIAL MESSAGE
-        // =========================
         function showSpecialMessage(text) {
-
             const msg = document.createElement('div');
-
             msg.innerHTML = text;
-
             msg.style.position = 'fixed';
             msg.style.top = '20%';
             msg.style.left = '50%';
             msg.style.transform = 'translateX(-50%)';
-
             msg.style.padding = '20px 40px';
             msg.style.background = '#ff1744';
             msg.style.color = 'white';
-
             msg.style.fontSize = '2rem';
             msg.style.fontWeight = '900';
-
             msg.style.borderRadius = '20px';
-
             msg.style.zIndex = '9999';
-
             document.body.appendChild(msg);
 
             setTimeout(() => {
@@ -1785,161 +1416,54 @@ For: Math Premier League Cricket Game
             }, 1500);
         }
 
-        // =========================
-        // SHOT BUTTONS
-        // Replace Existing Buttons
-        // =========================
-        function loadShotButtons() {
-
-            document.querySelector('.shots-grid').innerHTML = `
-
-        <button class="shot-card easy"
-            onclick="selectShot('Defensive',1)">
-            <div class="shot-name">🛡️ Defensive</div>
-            <div class="shot-reward">1 RUN</div>
-        </button>
-
-        <button class="shot-card easy"
-            onclick="selectShot('Sweep',2)">
-            <div class="shot-name">🌀 Sweep</div>
-            <div class="shot-reward">2 RUNS</div>
-        </button>
-
-        <button class="shot-card medium"
-            onclick="selectShot('Drive',4)">
-            <div class="shot-name">🎯 Drive</div>
-            <div class="shot-reward">4 RUNS</div>
-        </button>
-
-        <button class="shot-card hard"
-            onclick="selectShot('Lofted Shot',6)">
-            <div class="shot-name">🚀 Lofted</div>
-            <div class="shot-reward">6 RUNS</div>
-        </button>
-    `;
-        }
-
-        // =========================
-        // INITIALIZE
-        // =========================
-        document.addEventListener('DOMContentLoaded', () => {
-
-            loadShotButtons();
-
-            document.getElementById('target').textContent =
-                gameState.target;
-
-            document.getElementById('targetScore').textContent =
-                gameState.target;
-        });
         function showFeedback(message, type) {
-
-            const feedback =
-                document.getElementById('feedbackMsg');
-
+            const feedback = document.getElementById('feedbackMsg');
             feedback.style.display = 'block';
-
             feedback.innerHTML = message;
 
             if (type === 'success') {
-
-                feedback.style.background =
-                    'rgba(0,230,118,0.15)';
-
-                feedback.style.color =
-                    '#00e676';
-
-                feedback.style.border =
-                    '2px solid #00e676';
-
+                feedback.style.background = 'rgba(0,230,118,0.15)';
+                feedback.style.color = '#00e676';
+                feedback.style.border = '2px solid #00e676';
             } else {
-
-                feedback.style.background =
-                    'rgba(255,23,68,0.15)';
-
-                feedback.style.color =
-                    '#ff1744';
-
-                feedback.style.border =
-                    '2px solid #ff1744';
+                feedback.style.background = 'rgba(255,23,68,0.15)';
+                feedback.style.color = '#ff1744';
+                feedback.style.border = '2px solid #ff1744';
             }
         }
 
-        // =========================
-        // UPDATE STATS
-        // =========================
         function updateStats() {
+            document.getElementById('scoreDisplay').textContent = gameState.score;
+            document.getElementById('playerScore').textContent = gameState.score;
+            document.getElementById('ballsDisplay').textContent = gameState.balls + "/" + gameState.maxBalls;
+            document.getElementById('streakDisplay').textContent = gameState.streak;
 
-            document.getElementById('scoreDisplay')
-                .textContent = gameState.score;
+            const accuracy = gameState.totalAttempts > 0
+                ? Math.round((gameState.totalCorrect / gameState.totalAttempts) * 100)
+                : 0;
 
-            document.getElementById('playerScore')
-                .textContent = gameState.score;
-
-            document.getElementById('ballsDisplay')
-                .textContent =
-                gameState.balls +
-                "/" +
-                gameState.maxBalls;
-
-            document.getElementById('streakDisplay')
-                .textContent = gameState.streak;
-
-            const accuracy =
-                gameState.totalAttempts > 0
-                    ? Math.round(
-                        (gameState.totalCorrect /
-                            gameState.totalAttempts) * 100
-                    )
-                    : 0;
-
-            document.getElementById('accuracyDisplay')
-                .textContent = accuracy + "%";
+            document.getElementById('accuracyDisplay').textContent = accuracy + "%";
         }
 
-        // =========================
-        // UPDATE WICKETS
-        // =========================
         function updateWicketDisplay() {
-
-            const display =
-                document.getElementById('wicketDisplay');
-
+            const display = document.getElementById('wicketDisplay');
             display.innerHTML = '';
 
             for (let i = 0; i < gameState.maxWickets; i++) {
-
                 const div = document.createElement('div');
-
-                div.className =
-                    i < gameState.wickets
-                        ? 'wicket-icon fallen'
-                        : 'wicket-icon';
-
-                div.innerHTML =
-                    i < gameState.wickets
-                        ? '❌'
-                        : '🏏';
-
+                div.className = i < gameState.wickets ? 'wicket-icon fallen' : 'wicket-icon';
+                div.innerHTML = i < gameState.wickets ? '❌' : '🏃';
                 display.appendChild(div);
             }
         }
 
-        // =========================
-        // FOUR ANIMATION
-        // =========================
         function triggerFourAnimation() {
-
             const text = document.createElement('div');
-
-            text.className =
-                'animation-text four-text';
-
+            text.className = 'animation-text four-text';
             text.innerHTML = '⚡ FOUR ⚡';
-
             text.style.left = '50%';
             text.style.top = '40%';
-
+            text.style.transform = 'translateX(-50%)';
             document.body.appendChild(text);
 
             setTimeout(() => {
@@ -1947,21 +1471,13 @@ For: Math Premier League Cricket Game
             }, 1200);
         }
 
-        // =========================
-        // SIX ANIMATION
-        // =========================
         function triggerSixAnimation() {
-
             const text = document.createElement('div');
-
-            text.className =
-                'animation-text six-text';
-
+            text.className = 'animation-text six-text';
             text.innerHTML = '🔥 SIX 🔥';
-
             text.style.left = '50%';
             text.style.top = '35%';
-
+            text.style.transform = 'translateX(-50%)';
             document.body.appendChild(text);
 
             setTimeout(() => {
@@ -1969,21 +1485,13 @@ For: Math Premier League Cricket Game
             }, 1200);
         }
 
-        // =========================
-        // OUT ANIMATION
-        // =========================
         function triggerOutAnimation() {
-
             const text = document.createElement('div');
-
-            text.className =
-                'animation-text out-text';
-
+            text.className = 'animation-text out-text';
             text.innerHTML = '💥 OUT 💥';
-
             text.style.left = '50%';
             text.style.top = '35%';
-
+            text.style.transform = 'translateX(-50%)';
             document.body.appendChild(text);
 
             setTimeout(() => {
@@ -1991,105 +1499,88 @@ For: Math Premier League Cricket Game
             }, 1000);
         }
 
-        // =========================
-        // SKIP QUESTION
-        // =========================
         function skipQuestion() {
-
-            clearInterval(gameState.timerInterval);
-
+            stopTimer();
             gameState.balls++;
+            gameState.streak = 0;
 
-            handleWicket();
-
+            showFeedback("⏭️ Ball Skipped", "error");
             updateStats();
-        }
 
-        // =========================
-        // RESET ROUND FIX
-        // =========================
-        function resetRound() {
-
-            clearInterval(gameState.timerInterval);
-
-            gameState.timer = 30;
-
-            gameState.isFreeHit = false;
-
-            gameState.isNoBall = false;
-
-            document.getElementById('questionScreen')
-                .style.display = 'none';
-
-            document.getElementById('defaultScreen')
-                .style.display = 'block';
-
-            document.getElementById('feedbackMsg')
-                .style.display = 'none';
-
-            document.getElementById('answerInput')
-                .value = '';
-
-            document.body.style.animation = '';
-
-            updateStats();
-        }
-
-        // =========================
-        // END GAME
-        // =========================
-        function endGame(won) {
-
-            const modal =
-                document.getElementById('resultModal');
-
-            modal.classList.add('active');
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
-            document.getElementById('finalScore')
-                .textContent = gameState.score;
-
-            document.getElementById('finalTarget')
-                .textContent = gameState.target;
-
-
-            const accuracy =
-                gameState.totalAttempts > 0
-                    ? Math.round(
-                        (gameState.totalCorrect /
-                            gameState.totalAttempts) * 100
-                    )
-                    : 0;
-
-            document.getElementById('finalAccuracy')
-                .textContent = accuracy + "%";
-
-            document.getElementById('finalStreak')
-                .textContent = gameState.maxStreak;
-
-            if (won) {
-
-                document.getElementById('resultTitle')
-                    .innerHTML = '🏆 VICTORY';
-
-                document.getElementById('resultSubtitle')
-                    .innerHTML =
-                    'Brilliant Chase Masterclass!';
-
+            if (gameState.balls >= gameState.maxBalls) {
+                setTimeout(() => {
+                    endGame(false);
+                }, 800);
             } else {
-
-                document.getElementById('resultTitle')
-                    .innerHTML = '💥 ALL OUT';
-
-                document.getElementById('resultSubtitle')
-                    .innerHTML =
-                    'Better luck next innings!';
+                setTimeout(() => {
+                    resetRound();
+                }, 800);
             }
         }
 
-        // =========================
-        // SHARE SCORE
-        // =========================
+        function resetRound() {
+            stopTimer();
+            isSubmitting = false;
+            gameState.phase = GAME_PHASES.MENU;
+
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('defaultScreen').style.display = 'block';
+            document.getElementById('feedbackMsg').style.display = 'none';
+            document.getElementById('answerInput').value = '';
+        }
+
+        function resetGame() {
+            stopTimer();
+
+            gameState.score = 0;
+            gameState.wickets = 0;
+            gameState.balls = 0;
+            gameState.streak = 0;
+            gameState.maxStreak = 0;
+            gameState.totalCorrect = 0;
+            gameState.totalAttempts = 0;
+            gameState.phase = GAME_PHASES.MENU;
+
+            document.body.style.overflow = 'auto';
+            document.body.style.animation = '';
+            document.querySelector('.game-arena').style.visibility = 'visible';
+            document.getElementById('resultModal').classList.remove('active');
+
+            updateStats();
+            updateWicketDisplay();
+            resetRound();
+        }
+
+        function endGame(won) {
+            stopTimer();
+            gameState.phase = GAME_PHASES.ENDED;
+
+            document.body.style.overflow = 'hidden';
+            document.body.style.animation = '';
+            document.querySelector('.game-arena').style.visibility = 'hidden';
+
+            const modal = document.getElementById('resultModal');
+            modal.classList.add('active');
+
+            document.getElementById('finalScore').textContent = gameState.score;
+            document.getElementById('finalTarget').textContent = gameState.target;
+
+            const accuracy = gameState.totalAttempts > 0
+                ? Math.round((gameState.totalCorrect / gameState.totalAttempts) * 100)
+                : 0;
+
+            document.getElementById('finalAccuracy').textContent = accuracy + "%";
+            document.getElementById('finalStreak').textContent = gameState.maxStreak;
+
+            if (won) {
+                document.getElementById('resultTitle').innerHTML = '🏆 VICTORY';
+                document.getElementById('resultSubtitle').innerHTML = 'Brilliant Chase Masterclass!';
+            } else {
+                document.getElementById('resultTitle').innerHTML = '💥 ALL OUT';
+                document.getElementById('resultSubtitle').innerHTML = 'Better luck next innings!';
+            }
+        }
+
         function shareScore() {
             const shareText = `Math Premier League: I scored ${gameState.score} / ${gameState.target} with ${gameState.maxStreak} streak and ${Math.round(gameState.totalAttempts > 0 ? (gameState.totalCorrect / gameState.totalAttempts) * 100 : 0)}% accuracy!`;
 
@@ -2113,19 +1604,17 @@ For: Math Premier League Cricket Game
             });
         }
 
-        // =========================
-        // RESET GAME
-        // =========================
-        function resetGame() {
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('target').textContent = gameState.target;
+            document.getElementById('targetScore').textContent = gameState.target;
 
-            document.documentElement.style.overflow = '';
-            document.body.style.overflow = '';
-
-            location.reload();
-        }
-
+            document.getElementById('answerInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    submitAnswer();
+                }
+            });
+        });
     </script>
-
 </body>
 
 </html>
