@@ -5,9 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Math Premier League - Cricket Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Poppins:wght@300;400;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700;800&family=Poppins:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
         * {
@@ -21,6 +20,7 @@
             --secondary: #ffa500;
             --accent: #ff1744;
             --success: #00e676;
+            --gold: #ffd700;
             --dark-bg: #0a0e27;
             --darker-bg: #050710;
             --card-bg: rgba(15, 23, 42, 0.6);
@@ -34,6 +34,18 @@
             background-image:
                 radial-gradient(circle at top, rgba(0, 255, 255, 0.12) 0%, transparent 100%),
                 radial-gradient(circle at bottom right, rgba(255, 0, 128, 0.10) 0%, transparent 40%);
+            transition: background-image 0.6s ease;
+        }
+
+        body.high-energy {
+            background-image:
+                radial-gradient(circle at top, rgba(255, 165, 0, 0.18) 0%, transparent 100%),
+                radial-gradient(circle at bottom right, rgba(255, 23, 68, 0.14) 0%, transparent 40%);
+        }
+
+        .display-font {
+            font-family: 'Bebas Neue', 'Poppins', sans-serif;
+            letter-spacing: 2px;
         }
 
         .gradient-text {
@@ -44,84 +56,213 @@
         }
 
         @keyframes ballBounce {
-            0% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-30px) rotate(90deg); }
-            50% { transform: translateY(0) rotate(180deg); }
-            75% { transform: translateY(-20px) rotate(270deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
 
-        @keyframes batSwing {
-            0% { transform: rotate(0deg); transform-origin: right bottom; }
-            50% { transform: rotate(-120deg); transform-origin: right bottom; }
-            100% { transform: rotate(0deg); transform-origin: right bottom; }
+            25% {
+                transform: translateY(-30px) rotate(90deg);
+            }
+
+            50% {
+                transform: translateY(0) rotate(180deg);
+            }
+
+            75% {
+                transform: translateY(-20px) rotate(270deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
         }
 
         @keyframes wicketFall {
-            0% { transform: rotate(0deg); opacity: 1; }
-            50% { transform: rotate(45deg) translateX(20px); opacity: 1; }
-            100% { transform: rotate(90deg) translateX(40px); opacity: 0; }
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: rotate(50deg) scale(1.15);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(90deg) scale(1);
+                opacity: 0.5;
+            }
         }
 
         @keyframes sixFire {
-            0% { transform: scale(1) translateY(0); opacity: 1; }
-            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
+            0% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5) translateY(-100px);
+                opacity: 0;
+            }
         }
 
         @keyframes boundaryGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 230, 118, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), inset 0 0 20px rgba(0, 230, 118, 0.4); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), inset 0 0 20px rgba(0, 230, 118, 0.4);
+            }
         }
 
         @keyframes outAnimation {
-            0% { transform: scale(1) rotate(0deg); opacity: 1; }
-            50% { transform: scale(1.2) rotate(15deg); opacity: 1; }
-            100% { transform: scale(0.5) rotate(30deg); opacity: 0; }
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2) rotate(15deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5) rotate(30deg);
+                opacity: 0;
+            }
         }
 
         @keyframes crowdCheer {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
         }
 
-        .ball-bounce { animation: ballBounce 0.8s ease-in-out; }
-        .bat-swing { animation: batSwing 0.6s ease-in-out; }
-        .wicket-fall { animation: wicketFall 0.8s ease-in-out; }
-        .six-fire { animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .boundary-glow { animation: boundaryGlow 1s ease-in-out infinite; }
-        .out-flash { animation: outAnimation 0.8s ease-in-out; }
-        .crowd-cheer { animation: crowdCheer 0.5s ease-in-out; }
-        .slide-down { animation: slideDown 0.6s ease-out; }
-        .shake-effect { animation: shake 0.4s ease-in-out; }
+        @keyframes momentumPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(255, 23, 68, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(255, 23, 68, 0.9);
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .ball-bounce {
+            animation: ballBounce 0.8s ease-in-out;
+        }
+
+        .wicket-fall-anim {
+            animation: wicketFall 0.7s ease-in-out;
+        }
+
+        .six-fire {
+            animation: sixFire 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .boundary-glow-anim {
+            animation: boundaryGlow 0.9s ease-in-out 2;
+        }
+
+        .out-flash {
+            animation: outAnimation 0.8s ease-in-out;
+        }
+
+        .crowd-cheer {
+            animation: crowdCheer 0.5s ease-in-out;
+        }
+
+        .slide-down {
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .shake-effect {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .fade-in-anim {
+            animation: fadeIn 0.35s ease-out;
+        }
 
         .top-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem 2rem;
+            flex: 0 0 auto;
+            padding: clamp(0.5rem, 1.5vh, 1rem) 2rem;
             background: linear-gradient(to bottom, rgba(10, 14, 39, 0.95), transparent);
-            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -137,9 +278,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-size: 1.6rem;
         }
 
         .logo-icon {
@@ -153,25 +292,76 @@
             font-size: 1.5rem;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .high-score-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--gold);
+        }
+
+        .sound-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 217, 255, 0.08);
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+
+        .sound-btn:hover {
+            background: rgba(0, 217, 255, 0.18);
+        }
+
+        .sound-btn:focus-visible,
+        .btn:focus-visible,
+        .shot-card:focus-visible,
+        .answer-input:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
         .game-container {
             max-width: 900px;
-            margin: 1rem auto 0 auto;
+            margin: 0 auto;
             width: 100%;
             padding: 12px;
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
         }
 
         .game-arena {
             background: radial-gradient(circle at top, rgba(0, 255, 255, 0.12), transparent 40%),
-                        linear-gradient(135deg, #071120, #0a1630);
+                linear-gradient(135deg, #071120, #0a1630);
             border-radius: 24px;
-            padding: 1.5rem;
+            padding: clamp(0.75rem, 1.8vh, 1.5rem);
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
             width: 100%;
             max-width: 920px;
-            margin: 20px auto;
-            overflow: visible;
+            margin: 0 auto;
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+
         }
 
         .game-arena::before {
@@ -192,8 +382,8 @@
             grid-template-columns: 1fr auto 1fr;
             gap: 1.5rem;
             align-items: center;
-            margin-bottom: 1rem;
-            padding: 1.5rem;
+            margin-bottom: clamp(0.5rem, 1.4vh, 1rem);
+            padding: clamp(0.6rem, 1.6vh, 1.5rem);
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.6));
             border-radius: 16px;
             border: 1px solid var(--border-color);
@@ -204,30 +394,30 @@
         }
 
         .player-avatar {
-            width: 80px;
-            height: 80px;
+            width: clamp(44px, 8vh, 80px);
+            height: clamp(44px, 8vh, 80px);
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto clamp(0.35rem, 1vh, 1rem);
             border: 3px solid var(--primary);
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: clamp(1.4rem, 4vh, 2.5rem);
         }
 
         .player-name {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
         }
 
         .player-score {
-            font-size: 2.5rem;
+            font-size: clamp(1.4rem, 4vh, 2.5rem);
             font-weight: 900;
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .vs-section {
@@ -235,13 +425,14 @@
         }
 
         .vs-badge {
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: 2.2rem;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 3px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .wicket-display {
@@ -269,26 +460,86 @@
             opacity: 0.5;
         }
 
+        .wickets-section {
+            text-align: center;
+            margin-bottom: clamp(0.5rem, 1.2vh, 1.25rem);
+        }
+
+        .momentum-section {
+            margin: 0 0 clamp(0.5rem, 1.2vh, 1.25rem);
+            padding: clamp(0.5rem, 1.2vh, 0.9rem) 1.1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+        }
+
+        .momentum-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        #momentumStateText {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+        }
+
+        .momentum-track {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .momentum-fill {
+            height: 100%;
+            width: 50%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease, background 0.5s ease;
+        }
+
+        .momentum-fill.high {
+            animation: momentumPulse 1s ease-in-out infinite;
+        }
+
         .question-area {
             background: linear-gradient(135deg, rgba(5, 7, 16, 0.8), rgba(15, 23, 42, 0.8));
-            padding: 0.75rem;
+            padding: clamp(0.5rem, 1.4vh, 0.75rem);
             border-radius: 20px;
             border: 2px solid var(--border-color);
-            margin: 1rem 0;
+            margin: clamp(0.5rem, 1.2vh, 1rem) 0;
             position: relative;
             overflow: auto;
             width: 100%;
         }
 
+        .commentary-text {
+            text-align: center;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--gold);
+            opacity: 0.85;
+            margin-bottom: 0.25rem;
+            min-height: 1.2rem;
+        }
+
         .difficulty-badge {
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             border: 1px solid currentColor;
         }
 
@@ -310,23 +561,30 @@
             border-color: var(--accent);
         }
 
+        .difficulty-expert,
+        .difficulty-extreme {
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--gold);
+        }
+
         .question-text {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 4.5vh, 2.5rem);
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
             letter-spacing: 3px;
             color: var(--primary);
             text-align: center;
-            margin: 0.75rem 0;
+            margin: clamp(0.4rem, 1vh, 0.75rem) 0;
             text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
         }
 
         .timer-display {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
             text-align: center;
-            margin: 1rem 0;
+            margin: clamp(0.4rem, 1vh, 1rem) 0;
             letter-spacing: 2px;
         }
 
@@ -342,7 +600,7 @@
         .answer-input {
             width: 100%;
             padding: 0.5rem;
-            font-size: 1.75rem;
+            font-size: 1.6rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
             background: rgba(5, 7, 16, 0.9);
@@ -353,7 +611,7 @@
             letter-spacing: 2px;
             transition: all 0.3s ease;
             outline: none;
-            margin: 0.75rem 0;
+            margin: clamp(0.4rem, 1vh, 0.75rem) 0;
         }
 
         .answer-input:focus {
@@ -364,12 +622,12 @@
         .action-buttons {
             display: flex;
             gap: 1rem;
-            margin-top: 0.75rem;
+            margin-top: clamp(0.4rem, 1vh, 0.75rem);
             width: 100%;
         }
 
         .btn {
-            padding: 1rem;
+            padding: clamp(0.6rem, 1.6vh, 1rem);
             border: none;
             border-radius: 10px;
             font-weight: 700;
@@ -409,13 +667,13 @@
 
         .shots-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.9rem 0.5rem;
-            margin-top: 0.9rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.4vh, 0.9rem) 0.75rem;
+            margin-top: clamp(0.5rem, 1.4vh, 0.9rem);
         }
 
         .shot-card {
-            padding: 1.1rem;
+            padding: clamp(0.7rem, 1.8vh, 1.1rem);
             border-radius: 12px;
             border: 1px solid transparent;
             cursor: pointer;
@@ -423,7 +681,7 @@
             position: relative;
             overflow: hidden;
             width: 100%;
-            height: 75px;
+            height: clamp(64px, 11vh, 85px);
         }
 
         .shot-card:hover {
@@ -450,6 +708,7 @@
             font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
+            color: whitesmoke;
         }
 
         .shot-reward {
@@ -461,11 +720,11 @@
         .stats-bar {
             display: flex;
             gap: 2rem;
-            padding: 1.5rem;
+            padding: clamp(0.6rem, 1.6vh, 1.5rem);
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
-            margin-top: 1rem;
+            margin-top: clamp(0.5rem, 1.2vh, 1rem);
             flex-wrap: wrap;
         }
 
@@ -476,8 +735,8 @@
         }
 
         .stat-item-value {
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: clamp(1.2rem, 3vh, 2rem);
+            font-weight: 700;
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
         }
@@ -487,7 +746,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #999;
-            margin-top: 0.5rem;
+            margin-top: 0.35rem;
             font-weight: 600;
         }
 
@@ -503,7 +762,7 @@
             align-items: center;
             padding: 20px;
             background: rgba(0, 0, 0, 0.65);
-            overflow: auto;
+            overflow: hidden;
         }
 
         .modal.active {
@@ -521,6 +780,15 @@
             overflow: hidden;
         }
 
+        .confetti-piece {
+            position: absolute;
+            top: -20px;
+            width: 8px;
+            height: 14px;
+            border-radius: 2px;
+            animation: confettiFall linear forwards;
+        }
+
         .modal-content {
             position: relative;
             width: 100%;
@@ -534,7 +802,6 @@
             background: linear-gradient(135deg, rgba(10, 14, 39, 0.98), rgba(15, 23, 42, 0.98));
             border: 2px solid rgba(0, 217, 255, 0.5);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
         }
 
         .cricket-background {
@@ -564,21 +831,21 @@
         }
 
         .modal-title {
-            font-size: 2rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.6rem;
             line-height: 1.1;
             margin-bottom: 6px;
-            font-weight: 900;
             margin: 1rem 0;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .modal-subtitle {
-            font-size: 1.25rem;
-            margin: 1rem 0 2rem;
+            font-size: 1.15rem;
+            margin: 1rem 0 1.5rem;
             color: #bbb;
             font-weight: 600;
         }
@@ -619,18 +886,26 @@
         }
 
         .achievement-badge {
-            padding: 1rem 2rem;
-            background: rgba(0, 230, 118, 0.1);
-            border: 2px solid var(--success);
+            padding: 1rem 1.5rem;
+            background: rgba(255, 215, 0, 0.08);
+            border: 2px solid var(--gold);
             border-radius: 12px;
-            margin: 1.5rem 0;
+            margin: 1.25rem 0;
             animation: slideDown 0.6s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .achievement-icon {
+            font-size: 1.8rem;
         }
 
         .achievement-text {
             font-weight: 700;
-            color: var(--success);
-            font-size: 1.1rem;
+            color: var(--gold);
+            font-size: 1rem;
+            text-align: left;
         }
 
         .modal-buttons {
@@ -693,8 +968,9 @@
 
         .animation-text {
             position: fixed;
-            font-weight: 900;
-            font-size: 2.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 3px;
             pointer-events: none;
             z-index: 999;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -715,16 +991,34 @@
             animation: outAnimation 0.8s ease-in-out;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             max-width: 100%;
-            min-height: 100vh;
-            overflow: auto;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         @media (max-width: 768px) {
             .shots-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .action-buttons {
@@ -732,7 +1026,7 @@
             }
 
             .question-text {
-                font-size: 2rem;
+                font-size: clamp(1.3rem, 4vh, 2rem);
             }
 
             .scorecard {
@@ -779,7 +1073,12 @@
             }
 
             .achievement-text {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+            }
+
+            .high-score-pill {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.6rem;
             }
 
             * {
@@ -801,6 +1100,12 @@
                 box-shadow: none;
             }
         }
+
+        @media (max-width: 480px) {
+            .shots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -808,9 +1113,14 @@
     <!-- Navigation Bar -->
     <div class="top-nav">
         <div class="nav-content">
-            <div class="logo">
+            <div class="logo display-font">
                 <div class="logo-icon">🏏</div>
                 <span>Math Premier League</span>
+            </div>
+            <div class="nav-right">
+                <div class="high-score-pill">🏅 Best: <span id="highScoreDisplay">0</span></div>
+                <button id="soundToggle" class="sound-btn" onclick="toggleSound()" aria-label="Toggle sound"
+                    title="Toggle sound">🔊</button>
             </div>
         </div>
     </div>
@@ -825,12 +1135,13 @@
                     <div class="player-avatar">🏏</div>
                     <div class="player-name">You</div>
                     <div class="player-score" id="playerScore">0</div>
-                    <div style="font-size: 0.85rem; color: #999;">RUNS</div>
+                    <div style="font-size: 0.8rem; color: #999;">RUNS</div>
                 </div>
 
                 <div class="vs-section">
                     <div class="vs-badge">VS</div>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 0.75rem;">
+                    <div
+                        style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 0.5rem;">
                         Target: <span id="target">48</span></div>
                 </div>
 
@@ -838,13 +1149,14 @@
                     <div class="player-avatar" style="border-color: var(--secondary);">🎯</div>
                     <div class="player-name">Target</div>
                     <div class="player-score" style="color: var(--secondary);" id="targetScore">48</div>
-                    <div style="font-size: 0.85rem; color: #999;">Runs</div>
+                    <div style="font-size: 0.8rem; color: #999;">Runs</div>
                 </div>
             </div>
 
             <!-- Wickets Display -->
-            <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div style="font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 600;">
+            <div class="wickets-section">
+                <div
+                    style="font-size: 0.78rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600;">
                     Wickets Remaining</div>
                 <div class="wicket-display" id="wicketDisplay">
                     <div class="wicket-icon">🏃</div>
@@ -852,13 +1164,28 @@
                 </div>
             </div>
 
+            <!-- Crowd Momentum Meter (signature element) -->
+            <div class="momentum-section">
+                <div class="momentum-label">
+                    <span>Crowd Energy — <span id="momentumStateText">BUILDING</span></span>
+                    <span id="momentumEmoji">🙂</span>
+                </div>
+                <div class="momentum-track">
+                    <div class="momentum-fill" id="momentumFill"></div>
+                </div>
+            </div>
+
             <!-- Default Screen -->
             <div id="defaultScreen">
-                <div style="text-align: center; padding: 1rem 0;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.50rem; animation: ballBounce 2s infinite;">🏏</div>
-                    <h2 class="gradient-text" style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">
+                <div style="text-align: center; padding: clamp(0.25rem, 1vh, 1rem) 0;">
+                    <div
+                        style="font-size: clamp(1.5rem, 4vh, 2.5rem); margin-bottom: 0.35rem; animation: ballBounce 2s infinite;">
+                        🏏</div>
+                    <h2 class="gradient-text display-font"
+                        style="font-size: clamp(1.8rem, 5.5vh, 2.8rem); margin-bottom: 0.35rem;">
                         Select Your Shot</h2>
-                    <p style="color: #999; font-size: 1.1rem; margin-bottom: 2.5rem;">Choose difficulty and solve the math challenge</p>
+                    <p style="color: #999; font-size: 0.95rem; margin-bottom: clamp(0.5rem, 1.5vh, 1.25rem);">Choose
+                        difficulty and solve the math challenge</p>
                 </div>
 
                 <!-- Shot Selection Grid -->
@@ -893,17 +1220,22 @@
             <div id="questionScreen" style="display: none;">
                 <div style="margin-bottom: 0.10rem;">
                     <div class="difficulty-badge" id="difficultyBadge"></div>
-                    <h3 id="shotNameDisplay" style="font-size: 2.00rem; font-weight: 800; color: var(--primary);"></h3>
+                    <h3 id="shotNameDisplay" class="display-font" style="font-size: 1.7rem; color: var(--primary);">
+                    </h3>
                 </div>
 
-                <div class="question-area">
-                    <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin-bottom: 0.5rem; font-weight: 600;">
+                <div class="commentary-text" id="commentaryText"></div>
+
+                <div class="question-area" id="questionArea">
+                    <div
+                        style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #999; margin-bottom: 0.4rem; font-weight: 600;">
                         Solve This:</div>
                     <div class="question-text" id="questionText"></div>
                     <div class="timer-display" id="timerDisplay">00:10</div>
                 </div>
 
-                <input id="answerInput" type="text" class="answer-input" placeholder="Enter your answer..." inputmode="numeric" />
+                <input id="answerInput" type="text" class="answer-input" placeholder="Enter your answer..."
+                    inputmode="numeric" aria-label="Your answer" />
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="submitAnswer()">
@@ -914,7 +1246,8 @@
                     </button>
                 </div>
 
-                <div id="feedbackMsg" style="margin-top: 1.5rem; padding: 1rem; border-radius: 12px; text-align: center; display: none;">
+                <div id="feedbackMsg"
+                    style="margin-top: 0.75rem; padding: 0.75rem; border-radius: 12px; text-align: center; display: none;">
                 </div>
             </div>
 
@@ -925,8 +1258,8 @@
                     <div class="stat-item-value" id="scoreDisplay">0</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-item-label">Balls</div>
-                    <div class="stat-item-value" id="ballsDisplay">0</div>
+                    <div class="stat-item-label">Overs</div>
+                    <div class="stat-item-value" id="ballsDisplay">0.0</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-item-label">Accuracy</div>
@@ -945,6 +1278,7 @@
         <div class="modal-overlay">
             <div class="cricket-background"></div>
             <div class="cricket-background right"></div>
+            <div id="confettiLayer"></div>
         </div>
 
         <div class="modal-content">
@@ -1004,6 +1338,7 @@
         };
 
         let isSubmitting = false;
+        let audioCtx = null;
 
         let gameState = {
             score: 0,
@@ -1025,6 +1360,9 @@
             isFreeHit: false,
             isNoBall: false,
             phase: GAME_PHASES.MENU,
+            momentum: 50,
+            highScore: 0,
+            soundOn: true,
         };
 
         const difficulties = {
@@ -1050,8 +1388,40 @@
             }
         };
 
+        const commentaryLines = {
+            Easy: [
+                "Gentle loosener to get you started...",
+                "Textbook delivery — take your time.",
+                "Nothing tricky here, settle in."
+            ],
+            Medium: [
+                "Bowler's finding a rhythm now.",
+                "This one's got a bit of turn.",
+                "Field's crept in — stay sharp."
+            ],
+            Hard: [
+                "Short ball — this needs quick hands!",
+                "Testing your technique here.",
+                "Pressure's building in the middle overs."
+            ],
+            Expert: [
+                "Yorker! No time to think.",
+                "This is where matches are won.",
+                "Full concentration required."
+            ],
+            Extreme: [
+                "Do-or-die over. One shot at this.",
+                "The stadium's gone quiet.",
+                "Everything comes down to this ball."
+            ]
+        };
+
         function rand(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function pick(list) {
+            return list[Math.floor(Math.random() * list.length)];
         }
 
         function getProgressiveDifficulty() {
@@ -1075,7 +1445,7 @@
                     a = rand(20, 99);
                     b = rand(20, 99);
                     question = `${a} + ${b}`;
-                    answer = a + b;
+                    answer = a + b;         
                     break;
 
                 case 'subtraction':
@@ -1207,13 +1577,131 @@
             return Number(answer.toFixed(2)).toString();
         }
 
+        function formatOvers(balls) {
+            const overs = Math.floor(balls / 6);
+            const rem = balls % 6;
+            return `${overs}.${rem}`;
+        }
+
         function shouldTriggerNoBall() {
             return Math.random() < 0.15;
+        }
+
+        // ---------- Sound engine (synthesized, no external assets) ----------
+        function ensureAudio() {
+            if (!audioCtx) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    gameState.soundOn = false;
+                }
+            } else if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freq, dur = 0.15, type = 'sine', delay = 0, vol = 0.15) {
+            if (!gameState.soundOn) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const t0 = audioCtx.currentTime + delay;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, t0);
+            gain.gain.setValueAtTime(vol, t0);
+            gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t0);
+            osc.stop(t0 + dur);
+        }
+
+        function playHit() { playTone(600, 0.12, 'square'); }
+        function playFour() { playTone(500, 0.1, 'square', 0); playTone(720, 0.15, 'square', 0.08); }
+        function playSix() { playTone(500, 0.1, 'sawtooth', 0); playTone(700, 0.1, 'sawtooth', 0.08); playTone(950, 0.22, 'sawtooth', 0.16); }
+        function playOut() { playTone(320, 0.2, 'sawtooth', 0); playTone(200, 0.3, 'sawtooth', 0.15); }
+        function playVictory() { [523, 659, 784, 1046].forEach((f, i) => playTone(f, 0.28, 'triangle', i * 0.15, 0.12)); }
+        function playAllOut() { [400, 350, 300, 250].forEach((f, i) => playTone(f, 0.3, 'sawtooth', i * 0.18, 0.12)); }
+
+        function toggleSound() {
+            gameState.soundOn = !gameState.soundOn;
+            document.getElementById('soundToggle').textContent = gameState.soundOn ? '🔊' : '🔇';
+            if (gameState.soundOn) {
+                ensureAudio();
+                playTone(500, 0.1, 'sine');
+            }
+        }
+
+        // ---------- Persistent high score (window.storage, never localStorage) ----------
+        async function loadHighScore() {
+            try {
+                const res = await window.storage.get('mpl-highscore', false);
+                gameState.highScore = res && res.value ? Number(res.value) || 0 : 0;
+            } catch (e) {
+                gameState.highScore = 0;
+            }
+            document.getElementById('highScoreDisplay').textContent = gameState.highScore;
+        }
+
+        async function saveHighScoreIfNeeded() {
+            if (gameState.score > gameState.highScore) {
+                gameState.highScore = gameState.score;
+                document.getElementById('highScoreDisplay').textContent = gameState.highScore;
+                try {
+                    await window.storage.set('mpl-highscore', String(gameState.score), false);
+                } catch (e) {
+                    // storage unavailable, fail silently
+                }
+                return true;
+            }
+            return false;
+        }
+
+        // ---------- Momentum meter ----------
+        function updateMomentum(delta) {
+            gameState.momentum = Math.max(0, Math.min(100, gameState.momentum + delta));
+            renderMomentum();
+        }
+
+        function renderMomentum() {
+            const fill = document.getElementById('momentumFill');
+            const emoji = document.getElementById('momentumEmoji');
+            const stateText = document.getElementById('momentumStateText');
+            const m = gameState.momentum;
+
+            fill.style.width = m + '%';
+
+            let color, label, face;
+            if (m < 25) {
+                color = 'linear-gradient(90deg, #555, #888)';
+                label = 'QUIET';
+                face = '😐';
+            } else if (m < 50) {
+                color = 'linear-gradient(90deg, var(--primary), #00a8cc)';
+                label = 'BUILDING';
+                face = '🙂';
+            } else if (m < 75) {
+                color = 'linear-gradient(90deg, var(--primary), var(--secondary))';
+                label = 'LOUD';
+                face = '😃';
+            } else {
+                color = 'linear-gradient(90deg, var(--secondary), var(--accent))';
+                label = 'ELECTRIC';
+                face = '🔥';
+            }
+
+            fill.style.background = color;
+            stateText.textContent = label;
+            emoji.textContent = face;
+            fill.classList.toggle('high', m >= 75);
+            document.body.classList.toggle('high-energy', m >= 75);
         }
 
         function selectShot(name, runs) {
             if (gameState.phase !== GAME_PHASES.MENU) return;
 
+            ensureAudio();
             gameState.phase = GAME_PHASES.QUESTION;
             clearInterval(gameState.timerInterval);
 
@@ -1235,11 +1723,17 @@
             }
 
             document.getElementById('defaultScreen').style.display = 'none';
-            document.getElementById('questionScreen').style.display = 'block';
+            const qScreen = document.getElementById('questionScreen');
+            qScreen.style.display = 'block';
+            qScreen.classList.remove('fade-in-anim');
+            void qScreen.offsetWidth;
+            qScreen.classList.add('fade-in-anim');
+
             document.getElementById('questionText').textContent = q.question;
             document.getElementById('shotNameDisplay').textContent = gameState.isFreeHit
                 ? `${name} ⚡ FREE HIT`
                 : name;
+            document.getElementById('commentaryText').textContent = pick(commentaryLines[q.level]);
 
             const badge = document.getElementById('difficultyBadge');
             badge.textContent = q.level.toUpperCase();
@@ -1268,13 +1762,24 @@
                 if (gameState.timer <= 0) {
                     stopTimer();
                     gameState.streak = 0;
+                    updateMomentum(-15);
 
                     if (!gameState.isNoBall) {
                         gameState.balls++;
                     }
 
-                    showFeedback("⏰ TIME UP!", "error");
                     updateStats();
+
+                    if (gameState.isNoBall) {
+                        showFeedback("⚡ FREE HIT — TIME'S UP, NO WICKET", "error");
+                        setTimeout(() => {
+                            resetRound();
+                        }, 1000);
+                        return;
+                    }
+
+                    showFeedback("⏰ TIME UP!", "error");
+                    playOut();
 
                     if (gameState.balls >= gameState.maxBalls) {
                         setTimeout(() => {
@@ -1294,7 +1799,7 @@
             const seconds = gameState.timer < 10 ? '0' + gameState.timer : gameState.timer;
             display.textContent = `00:${seconds}`;
 
-            if (gameState.phase !== GAME_PHASES.ENDED && gameState.maxBalls - gameState.balls <= 2) {
+            if (gameState.phase !== GAME_PHASES.ENDED && gameState.timer <= 5) {
                 display.style.color = '#ff1744';
                 document.body.style.animation = 'shake 0.4s infinite';
             } else {
@@ -1338,12 +1843,20 @@
                 }
 
                 if (gameState.currentRuns === 6) {
+                    updateMomentum(25);
                     triggerSixAnimation();
+                    triggerBoundaryGlow();
+                    playSix();
                     showFeedback(`🔥 SIX! +${gameState.currentRuns}`, 'success');
                 } else if (gameState.currentRuns === 4) {
+                    updateMomentum(18);
                     triggerFourAnimation();
+                    triggerBoundaryGlow();
+                    playFour();
                     showFeedback(`⚡ FOUR! +${gameState.currentRuns}`, 'success');
                 } else {
+                    updateMomentum(12);
+                    playHit();
                     showFeedback(`✅ +${gameState.currentRuns} RUN`, 'success');
                 }
 
@@ -1360,6 +1873,7 @@
                 }, 1200);
             } else {
                 gameState.streak = 0;
+                updateMomentum(-20);
 
                 if (gameState.isFreeHit) {
                     showFeedback("⚡ FREE HIT - NO WICKET", "success");
@@ -1370,6 +1884,7 @@
                     }, 1000);
                 } else {
                     showFeedback(`❌ Correct: ${formatAnswer(gameState.currentAnswer)}`, 'error');
+                    playOut();
 
                     setTimeout(() => {
                         isSubmitting = false;
@@ -1387,6 +1902,7 @@
             updateWicketDisplay();
 
             if (gameState.wickets >= gameState.maxWickets) {
+                playAllOut();
                 setTimeout(() => {
                     endGame(false);
                 }, 1000);
@@ -1435,7 +1951,8 @@
         function updateStats() {
             document.getElementById('scoreDisplay').textContent = gameState.score;
             document.getElementById('playerScore').textContent = gameState.score;
-            document.getElementById('ballsDisplay').textContent = gameState.balls + "/" + gameState.maxBalls;
+            document.getElementById('ballsDisplay').textContent =
+                formatOvers(gameState.balls) + ' / ' + formatOvers(gameState.maxBalls);
             document.getElementById('streakDisplay').textContent = gameState.streak;
 
             const accuracy = gameState.totalAttempts > 0
@@ -1451,10 +1968,22 @@
 
             for (let i = 0; i < gameState.maxWickets; i++) {
                 const div = document.createElement('div');
-                div.className = i < gameState.wickets ? 'wicket-icon fallen' : 'wicket-icon';
-                div.innerHTML = i < gameState.wickets ? '❌' : '🏃';
+                const isFallen = i < gameState.wickets;
+                div.className = isFallen ? 'wicket-icon fallen' : 'wicket-icon';
+                div.innerHTML = isFallen ? '❌' : '🏃';
+                if (isFallen && i === gameState.wickets - 1) {
+                    div.classList.add('wicket-fall-anim');
+                }
                 display.appendChild(div);
             }
+        }
+
+        function triggerBoundaryGlow() {
+            const area = document.getElementById('questionArea');
+            area.classList.remove('boundary-glow-anim');
+            void area.offsetWidth;
+            area.classList.add('boundary-glow-anim');
+            setTimeout(() => area.classList.remove('boundary-glow-anim'), 1800);
         }
 
         function triggerFourAnimation() {
@@ -1503,6 +2032,7 @@
             stopTimer();
             gameState.balls++;
             gameState.streak = 0;
+            updateMomentum(-10);
 
             showFeedback("⏭️ Ball Skipped", "error");
             updateStats();
@@ -1524,7 +2054,12 @@
             gameState.phase = GAME_PHASES.MENU;
 
             document.getElementById('questionScreen').style.display = 'none';
-            document.getElementById('defaultScreen').style.display = 'block';
+            const defaultScreen = document.getElementById('defaultScreen');
+            defaultScreen.style.display = 'block';
+            defaultScreen.classList.remove('fade-in-anim');
+            void defaultScreen.offsetWidth;
+            defaultScreen.classList.add('fade-in-anim');
+
             document.getElementById('feedbackMsg').style.display = 'none';
             document.getElementById('answerInput').value = '';
         }
@@ -1539,23 +2074,61 @@
             gameState.maxStreak = 0;
             gameState.totalCorrect = 0;
             gameState.totalAttempts = 0;
+            gameState.momentum = 50;
             gameState.phase = GAME_PHASES.MENU;
 
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'hidden';
             document.body.style.animation = '';
+            document.body.classList.remove('high-energy');
             document.querySelector('.game-arena').style.visibility = 'visible';
             document.getElementById('resultModal').classList.remove('active');
+            document.getElementById('confettiLayer').innerHTML = '';
 
             updateStats();
             updateWicketDisplay();
+            renderMomentum();
             resetRound();
         }
 
-        function endGame(won) {
+        function getAchievement(won, accuracy, maxStreak, isNewHigh) {
+            if (isNewHigh) {
+                return { icon: '🏅', text: 'New personal best! The scoreboard just got rewritten.' };
+            }
+            if (won && accuracy === 100) {
+                return { icon: '💯', text: 'Flawless chase — not a single delivery missed!' };
+            }
+            if (maxStreak >= 5) {
+                return { icon: '🔥', text: `${maxStreak}-ball streak — that bat was on fire!` };
+            }
+            if (won) {
+                return { icon: '🏆', text: 'Target chased down in style!' };
+            }
+            if (accuracy >= 70) {
+                return { icon: '👍', text: 'Solid knock — just fell short of the target.' };
+            }
+            return null;
+        }
+
+        function launchConfetti() {
+            const layer = document.getElementById('confettiLayer');
+            layer.innerHTML = '';
+            const colors = ['#00d9ff', '#ffa500', '#00e676', '#ffd700', '#ff1744'];
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+                piece.style.animationDelay = (Math.random() * 0.6) + 's';
+                layer.appendChild(piece);
+            }
+            setTimeout(() => { layer.innerHTML = ''; }, 3500);
+        }
+
+        async function endGame(won) {
             stopTimer();
             gameState.phase = GAME_PHASES.ENDED;
 
-            document.body.style.overflow = 'hidden';
             document.body.style.animation = '';
             document.querySelector('.game-arena').style.visibility = 'hidden';
 
@@ -1572,12 +2145,29 @@
             document.getElementById('finalAccuracy').textContent = accuracy + "%";
             document.getElementById('finalStreak').textContent = gameState.maxStreak;
 
+            const isNewHigh = await saveHighScoreIfNeeded();
+
             if (won) {
                 document.getElementById('resultTitle').innerHTML = '🏆 VICTORY';
-                document.getElementById('resultSubtitle').innerHTML = 'Brilliant Chase Masterclass!';
+                document.getElementById('resultSubtitle').innerHTML = 'Brilliant chase masterclass!';
+                playVictory();
+                launchConfetti();
             } else {
                 document.getElementById('resultTitle').innerHTML = '💥 ALL OUT';
                 document.getElementById('resultSubtitle').innerHTML = 'Better luck next innings!';
+            }
+
+            const achievement = getAchievement(won, accuracy, gameState.maxStreak, isNewHigh);
+            const badgeEl = document.getElementById('achievementBadge');
+            if (achievement) {
+                badgeEl.innerHTML = `
+                    <div class="achievement-badge">
+                        <div class="achievement-icon">${achievement.icon}</div>
+                        <div class="achievement-text">${achievement.text}</div>
+                    </div>
+                `;
+            } else {
+                badgeEl.innerHTML = '';
             }
         }
 
@@ -1613,6 +2203,10 @@
                     submitAnswer();
                 }
             });
+
+            renderMomentum();
+            updateStats();
+            loadHighScore();
         });
     </script>
 </body>
