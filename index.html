@@ -1118,6 +1118,13 @@
                 <span>Math Premier League</span>
             </div>
             <div class="nav-right">
+                <div style="display: flex; gap: 0.35rem; align-items: center;">
+                    <button class="sound-btn" onclick="createOnlineGame()" title="Create online room" aria-label="Create online room">＋</button>
+                    <input id="roomCodeInput" aria-label="Room code" placeholder="ROOM" maxlength="6" style="width: 68px; height: 40px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(0, 217, 255, 0.08); color: var(--primary); text-align: center; font-weight: 700; text-transform: uppercase;">
+                    <button class="sound-btn" onclick="joinOnlineGame()" title="Join online room" aria-label="Join online room">↪</button>
+                </div>
+                <div class="high-score-pill">👥 Local 2P</div>
+                <div class="high-score-pill" id="onlineStatus">Offline</div>
                 <div class="high-score-pill">🏅 Best: <span id="highScoreDisplay">0</span></div>
                 <button id="soundToggle" class="sound-btn" onclick="toggleSound()" aria-label="Toggle sound"
                     title="Toggle sound">🔊</button>
@@ -1133,7 +1140,7 @@
             <div class="scorecard">
                 <div class="player-card">
                     <div class="player-avatar">🏏</div>
-                    <div class="player-name">You</div>
+                    <div class="player-name" id="playerOneName">Player 1</div>
                     <div class="player-score" id="playerScore">0</div>
                     <div style="font-size: 0.8rem; color: #999;">RUNS</div>
                 </div>
@@ -1142,16 +1149,18 @@
                     <div class="vs-badge">VS</div>
                     <div
                         style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 0.5rem;">
-                        Target: <span id="target">48</span></div>
+                        First to bat: <span id="target">Player 1</span></div>
                 </div>
 
                 <div class="player-card">
                     <div class="player-avatar" style="border-color: var(--secondary);">🎯</div>
-                    <div class="player-name">Target</div>
+                    <div class="player-name" id="playerTwoName">Player 2</div>
                     <div class="player-score" style="color: var(--secondary);" id="targetScore">48</div>
-                    <div style="font-size: 0.8rem; color: #999;">Runs</div>
+                    <div style="font-size: 0.8rem; color: #999;">RUNS</div>
                 </div>
             </div>
+
+            <div id="turnIndicator" style="text-align: center; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">Player 1's innings</div>
 
             <!-- Wickets Display -->
             <div class="wickets-section">
@@ -1303,7 +1312,7 @@
                         <div class="scorecard-value" id="finalScore">0</div>
                     </div>
                     <div class="scorecard-item">
-                        <div class="scorecard-label">Target</div>
+                        <div class="scorecard-label">Scoreboard</div>
                         <div class="scorecard-value" style="color: var(--secondary);" id="finalTarget">48</div>
                     </div>
                 </div>
@@ -1339,6 +1348,9 @@
 
         let isSubmitting = false;
         let audioCtx = null;
+        let onlineSocket = null;
+        let onlineRole = null;
+        let onlineRoomCode = '';
 
         let gameState = {
             score: 0,
@@ -1363,6 +1375,11 @@
             momentum: 50,
             highScore: 0,
             soundOn: true,
+            currentPlayer: 0,
+            players: [
+                { name: 'Player 1', score: 0 },
+                { name: 'Player 2', score: 0 }
+            ],
         };
 
         const difficulties = {
@@ -1415,6 +1432,114 @@
                 "Everything comes down to this ball."
             ]
         };
+
+        function isOnline() {
+            return onlineSocket && onlineSocket.readyState === WebSocket.OPEN;
+        }
+
+        function canAct() {
+            if (!isOnline()) return true;
+            return (onlineRole === 'host' ? 0 : 1) === gameState.currentPlayer;
+        }
+
+        function updateOnlineStatus(text) {
+            const status = document.getElementById('onlineStatus');
+            if (status) status.textContent = text;
+        }
+
+        function connectOnline() {
+            if (isOnline()) return true;
+            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            onlineSocket = new WebSocket(`${protocol}//${location.host}`);
+            onlineSocket.addEventListener('open', () => updateOnlineStatus('Connected'));
+            onlineSocket.addEventListener('close', () => {
+                onlineRole = null;
+                updateOnlineStatus('Offline');
+            });
+            onlineSocket.addEventListener('message', event => {
+                const message = JSON.parse(event.data);
+                if (message.type === 'room') {
+                    onlineRoomCode = message.code;
+                    onlineRole = message.role;
+                    document.getElementById('roomCodeInput').value = message.code;
+                    updateOnlineStatus(`${message.code} · ${message.players.length}/2`);
+                    showSpecialMessage(onlineRole === 'host' ? `Room ${message.code} created` : `Joined room ${message.code}`);
+                    if (onlineRole === 'guest') renderRemoteState(message.state);
+                } else if (message.type === 'state' && onlineRole === 'guest') {
+                    renderRemoteState(message.state);
+                } else if (message.type === 'action' && onlineRole === 'host') {
+                    if (message.action === 'shot' && gameState.currentPlayer === 1) selectShot(message.name, message.runs);
+                    if (message.action === 'answer' && gameState.currentPlayer === 1) {
+                        document.getElementById('answerInput').value = message.answer;
+                        submitAnswer();
+                    }
+                    if (message.action === 'skip' && gameState.currentPlayer === 1) skipQuestion();
+                    if (message.action === 'reset') resetGame();
+                } else if (message.type === 'peer-left') {
+                    updateOnlineStatus('Opponent left');
+                    showSpecialMessage('Opponent disconnected');
+                } else if (message.type === 'error') {
+                    updateOnlineStatus(message.message);
+                }
+            });
+            return false;
+        }
+
+        function sendOnline(message) {
+            if (isOnline()) onlineSocket.send(JSON.stringify(message));
+        }
+
+        function createOnlineGame() {
+            connectOnline();
+            if (isOnline()) sendOnline({ type: 'create' });
+            else onlineSocket.addEventListener('open', () => sendOnline({ type: 'create' }), { once: true });
+        }
+
+        function joinOnlineGame() {
+            const code = document.getElementById('roomCodeInput').value.trim().toUpperCase();
+            if (!code) return showSpecialMessage('Enter a room code first');
+            connectOnline();
+            if (isOnline()) sendOnline({ type: 'join', code });
+            else onlineSocket.addEventListener('open', () => sendOnline({ type: 'join', code }), { once: true });
+        }
+
+        function getNetworkState() {
+            return {
+                ...gameState,
+                timerInterval: null,
+                currentAnswer: '',
+                timer: gameState.timer,
+                players: gameState.players.map(player => ({ ...player }))
+            };
+        }
+
+        function broadcastState() {
+            if (onlineRole === 'host') sendOnline({ type: 'state', state: getNetworkState() });
+        }
+
+        function renderRemoteState(state) {
+            if (!state) return;
+            Object.assign(gameState, state);
+            gameState.timerInterval = null;
+            document.getElementById('playerOneName').textContent = gameState.players[0].name;
+            document.getElementById('playerTwoName').textContent = gameState.players[1].name;
+            if (gameState.phase === GAME_PHASES.QUESTION) {
+                document.getElementById('defaultScreen').style.display = 'none';
+                document.getElementById('questionScreen').style.display = 'block';
+                document.getElementById('questionText').textContent = gameState.currentQuestion;
+                document.getElementById('shotNameDisplay').textContent = gameState.currentDifficulty;
+                document.getElementById('difficultyBadge').textContent = gameState.currentDifficulty.toUpperCase();
+                updateTimerDisplay();
+            } else if (gameState.phase === GAME_PHASES.MENU) {
+                document.getElementById('questionScreen').style.display = 'none';
+                document.getElementById('defaultScreen').style.display = 'block';
+            } else if (gameState.phase === GAME_PHASES.ENDED) {
+                endGame(false);
+            }
+            updateStats();
+            updateWicketDisplay();
+            renderMomentum();
+        }
 
         function rand(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1700,6 +1825,11 @@
 
         function selectShot(name, runs) {
             if (gameState.phase !== GAME_PHASES.MENU) return;
+            if (!canAct()) return;
+            if (onlineRole === 'guest') {
+                sendOnline({ type: 'action', action: 'shot', name, runs });
+                return;
+            }
 
             ensureAudio();
             gameState.phase = GAME_PHASES.QUESTION;
@@ -1810,6 +1940,11 @@
 
         function submitAnswer() {
             if (isSubmitting) return;
+            if (!canAct()) return;
+            if (onlineRole === 'guest') {
+                sendOnline({ type: 'action', action: 'answer', answer: document.getElementById('answerInput').value.trim() });
+                return;
+            }
 
             isSubmitting = true;
             stopTimer();
@@ -1949,8 +2084,11 @@
         }
 
         function updateStats() {
+            gameState.players[gameState.currentPlayer].score = gameState.score;
             document.getElementById('scoreDisplay').textContent = gameState.score;
             document.getElementById('playerScore').textContent = gameState.score;
+            document.getElementById('targetScore').textContent = gameState.players[gameState.currentPlayer === 0 ? 1 : 0].score;
+            document.getElementById('turnIndicator').textContent = `${gameState.players[gameState.currentPlayer].name}'s innings`;
             document.getElementById('ballsDisplay').textContent =
                 formatOvers(gameState.balls) + ' / ' + formatOvers(gameState.maxBalls);
             document.getElementById('streakDisplay').textContent = gameState.streak;
@@ -1960,6 +2098,7 @@
                 : 0;
 
             document.getElementById('accuracyDisplay').textContent = accuracy + "%";
+            broadcastState();
         }
 
         function updateWicketDisplay() {
@@ -2029,6 +2168,11 @@
         }
 
         function skipQuestion() {
+            if (!canAct()) return;
+            if (onlineRole === 'guest') {
+                sendOnline({ type: 'action', action: 'skip' });
+                return;
+            }
             stopTimer();
             gameState.balls++;
             gameState.streak = 0;
@@ -2064,7 +2208,27 @@
             document.getElementById('answerInput').value = '';
         }
 
+        function switchPlayer() {
+            gameState.players[gameState.currentPlayer].score = gameState.score;
+            gameState.currentPlayer = gameState.currentPlayer === 0 ? 1 : 0;
+            gameState.score = gameState.players[gameState.currentPlayer].score;
+            gameState.wickets = 0;
+            gameState.balls = 0;
+            gameState.streak = 0;
+            gameState.maxStreak = 0;
+            gameState.totalCorrect = 0;
+            gameState.totalAttempts = 0;
+            gameState.momentum = 50;
+            updateStats();
+            updateWicketDisplay();
+            renderMomentum();
+        }
+
         function resetGame() {
+            if (onlineRole === 'guest') {
+                sendOnline({ type: 'action', action: 'reset' });
+                return;
+            }
             stopTimer();
 
             gameState.score = 0;
@@ -2076,6 +2240,9 @@
             gameState.totalAttempts = 0;
             gameState.momentum = 50;
             gameState.phase = GAME_PHASES.MENU;
+            gameState.currentPlayer = 0;
+            gameState.players.forEach(player => player.score = 0);
+            gameState.score = 0;
 
             document.body.style.overflow = 'hidden';
             document.body.style.animation = '';
@@ -2127,6 +2294,15 @@
 
         async function endGame(won) {
             stopTimer();
+
+            if (gameState.currentPlayer === 0) {
+                gameState.players[0].score = gameState.score;
+                showSpecialMessage("🏏 Innings complete — Player 2 bats now!");
+                switchPlayer();
+                resetRound();
+                return;
+            }
+
             gameState.phase = GAME_PHASES.ENDED;
 
             document.body.style.animation = '';
@@ -2135,8 +2311,14 @@
             const modal = document.getElementById('resultModal');
             modal.classList.add('active');
 
-            document.getElementById('finalScore').textContent = gameState.score;
-            document.getElementById('finalTarget').textContent = gameState.target;
+            gameState.players[gameState.currentPlayer].score = gameState.score;
+            const playerOneScore = gameState.players[0].score;
+            const playerTwoScore = gameState.players[1].score;
+            const winner = playerOneScore === playerTwoScore
+                ? null
+                : (playerOneScore > playerTwoScore ? gameState.players[0] : gameState.players[1]);
+            document.getElementById('finalScore').textContent = `${playerOneScore} - ${playerTwoScore}`;
+            document.getElementById('finalTarget').textContent = 'P1 vs P2';
 
             const accuracy = gameState.totalAttempts > 0
                 ? Math.round((gameState.totalCorrect / gameState.totalAttempts) * 100)
@@ -2147,17 +2329,17 @@
 
             const isNewHigh = await saveHighScoreIfNeeded();
 
-            if (won) {
-                document.getElementById('resultTitle').innerHTML = '🏆 VICTORY';
-                document.getElementById('resultSubtitle').innerHTML = 'Brilliant chase masterclass!';
+            if (winner) {
+                document.getElementById('resultTitle').innerHTML = `🏆 ${winner.name.toUpperCase()} WINS`;
+                document.getElementById('resultSubtitle').innerHTML = 'Match complete. Hand the device to the next captain.';
                 playVictory();
                 launchConfetti();
             } else {
-                document.getElementById('resultTitle').innerHTML = '💥 ALL OUT';
-                document.getElementById('resultSubtitle').innerHTML = 'Better luck next innings!';
+                document.getElementById('resultTitle').innerHTML = '🤝 MATCH TIED';
+                document.getElementById('resultSubtitle').innerHTML = 'Both players finished level.';
             }
 
-            const achievement = getAchievement(won, accuracy, gameState.maxStreak, isNewHigh);
+            const achievement = getAchievement(Boolean(winner), accuracy, gameState.maxStreak, isNewHigh);
             const badgeEl = document.getElementById('achievementBadge');
             if (achievement) {
                 badgeEl.innerHTML = `
@@ -2169,10 +2351,12 @@
             } else {
                 badgeEl.innerHTML = '';
             }
+            broadcastState();
         }
 
         function shareScore() {
-            const shareText = `Math Premier League: I scored ${gameState.score} / ${gameState.target} with ${gameState.maxStreak} streak and ${Math.round(gameState.totalAttempts > 0 ? (gameState.totalCorrect / gameState.totalAttempts) * 100 : 0)}% accuracy!`;
+            gameState.players[gameState.currentPlayer].score = gameState.score;
+            const shareText = `Math Premier League: ${gameState.players[0].name} ${gameState.players[0].score} - ${gameState.players[1].score} ${gameState.players[1].name}!`;
 
             if (navigator.share) {
                 navigator.share({
@@ -2195,8 +2379,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('target').textContent = gameState.target;
-            document.getElementById('targetScore').textContent = gameState.target;
+            document.getElementById('target').textContent = gameState.players[0].name;
+            document.getElementById('targetScore').textContent = gameState.players[1].score;
+            document.getElementById('playerOneName').textContent = gameState.players[0].name;
+            document.getElementById('playerTwoName').textContent = gameState.players[1].name;
 
             document.getElementById('answerInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
